@@ -1,0 +1,25 @@
+# -*- mode: python -*-
+
+env = Environment(CPPFLAGS="-DDEBUG --param inline-unit-growth=500 --param large-function-growth=5000 --param max-inline-insns-single=5000 -Wall -Wctor-dtor-privacy -Wstrict-null-sentinel -Woverloaded-virtual -Wextra -Wunused -Wswitch -Wreorder -Wformat-y2k -Wformat-security -Wuninitialized -Winit-self -Wmissing-include-dirs -Wswitch-enum -Wfloat-equal -ggdb -O2 -I.")
+
+conf = Configure(env)
+
+for hdr in ('loki/TypeTraits.h', 'boost/lexical_cast.hpp',
+            'boost/test/unit_test.hpp', 'boost/test/unit_test_log.hpp',
+            'boost/test/unit_test_monitor.hpp',
+            'boost/test/impl/unit_test_main.ipp',
+            'boost/test/impl/framework.ipp'):
+    if not conf.CheckCXXHeader(hdr):
+        print "We need C++ header %s." % hdr
+        Exit(1)
+
+for lib in ('loki', 'boost_unit_test_framework-mt'):
+    if not conf.CheckLib(lib, language="C++"):
+        print "We need C++ library %s" % lib
+        Exit(1)
+
+env = conf.Finish()
+
+Export('env')
+SConscript('egen/SConscript')
+SConscript('test/SConscript')

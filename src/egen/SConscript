@@ -1,0 +1,4 @@
+# -*- mode: python -*-
+Import('env')
+
+env.SharedLibrary('libegen', Split('Angle.cpp'))

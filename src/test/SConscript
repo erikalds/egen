@@ -1,0 +1,7 @@
+# -*- mode: python -*-
+Import('env')
+
+e = env.Clone(LIBS = Split('boost_unit_test_framework-mt egen'), LIBPATH='#egen')
+
+prog = e.Program('libegen-test', Split('main.cpp TestInvalid.cpp'))
+e.AddPostAction(prog, 'LD_LIBRARY_PATH=egen test/libegen-test')
