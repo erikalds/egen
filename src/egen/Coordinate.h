@@ -27,6 +27,7 @@
     NORWAY
 */
 
+#include <ostream>
 #include "egen/invalid.h"
 
 namespace egen
@@ -60,6 +61,9 @@ namespace egen
   template<typename T>
   bool operator==(const Coordinate<T>& lhs, const Coordinate<T>& rhs)
   { return lhs.x() == rhs.x() && lhs.y() == rhs.y() && lhs.z() == rhs.z(); }
+
+  template<typename T>
+  std::ostream& operator<<(std::ostream& out, const Coordinate<T>& p);
 } // namespace egen
 
 // implementations
@@ -79,6 +83,18 @@ namespace egen {
       scaled.z() = U(z()) * z_scale;
 
     return scaled;
+  }
+
+  template<typename T>
+  std::ostream& operator<<(std::ostream& out, const Coordinate<T>& p)
+  {
+    if (invalid(p))
+      return out << "invalid point";
+
+    out << "(" << p.x() << ", " << p.y();
+    if (valid(p.z()))
+      out << ", " << p.z();
+    return out << ")";
   }
 } // namespace egen
 
