@@ -3,16 +3,21 @@ import os
 
 Import(Split('env PREFIX'))
 
+sources=Split("Angle.cpp")
+
 # env.Append(SHLIBSUFFIX = '.0.0.0')
 # env.Append(SHLINKFLAGS = '-Wl,-soname -Wl,libegen.so.0')
-libegen_shared = env.SharedLibrary('libegen', Split('Angle.cpp'))
+libegen_static = env.StaticLibrary('libegen', sources)
+libegen_shared = env.SharedLibrary('libegen', sources)
 
-env.Install(dir = os.path.join(PREFIX, "lib"), source = libegen_shared)
-env.Install(dir = os.path.join(PREFIX, "include"),
+env.Install(dir = os.path.join(PREFIX, "usr", "lib"), source = [libegen_shared, libegen_static])
+env.Install(dir = os.path.join(PREFIX, "usr", "include", "egen"),
             source = Split("Angle.h Coordinate.h equality.h invalid.h Point.h Vector.h"))
 
-env.Alias("build", libegen_shared)
-env.Alias("install", ["build", os.path.join(PREFIX, "include"), os.path.join(PREFIX, "lib")])
+env.Alias("build", [libegen_shared, libegen_static])
+env.Alias("install", ["build",
+                      os.path.join(PREFIX, "usr", "include", "egen"),
+                      os.path.join(PREFIX, "usr", "lib")])
 
 env.Default(None)
 env.Default("build")
