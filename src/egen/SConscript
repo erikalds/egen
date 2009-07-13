@@ -1,4 +1,18 @@
 # -*- mode: python -*-
-Import('env')
+import os
 
-env.SharedLibrary('libegen', Split('Angle.cpp'))
+Import(Split('env PREFIX'))
+
+# env.Append(SHLIBSUFFIX = '.0.0.0')
+# env.Append(SHLINKFLAGS = '-Wl,-soname -Wl,libegen.so.0')
+libegen_shared = env.SharedLibrary('libegen', Split('Angle.cpp'))
+
+env.Install(dir = os.path.join(PREFIX, "lib"), source = libegen_shared)
+env.Install(dir = os.path.join(PREFIX, "include"),
+            source = Split("Angle.h Coordinate.h equality.h invalid.h Point.h Vector.h"))
+
+env.Alias("build", libegen_shared)
+env.Alias("install", ["build", os.path.join(PREFIX, "include"), os.path.join(PREFIX, "lib")])
+
+env.Default(None)
+env.Default("build")

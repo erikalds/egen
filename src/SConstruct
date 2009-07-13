@@ -1,5 +1,9 @@
 # -*- mode: python -*-
 
+import os
+
+EnsureSConsVersion(1, 2)
+
 env = Environment(CPPFLAGS="-DDEBUG --param inline-unit-growth=500 --param large-function-growth=5000 --param max-inline-insns-single=5000 -Wall -Wctor-dtor-privacy -Wstrict-null-sentinel -Woverloaded-virtual -Wextra -Wunused -Wswitch -Wreorder -Wformat-y2k -Wformat-security -Wuninitialized -Winit-self -Wmissing-include-dirs -Wswitch-enum -Wfloat-equal -ggdb -O2 -I.")
 
 conf = Configure(env)
@@ -20,6 +24,12 @@ for lib in ('loki', 'boost_unit_test_framework-mt'):
 
 env = conf.Finish()
 
-Export('env')
+DESTDIR=os.getenv("DESTDIR")
+if not DESTDIR:
+    DESTDIR=os.path.join(os.getcwd(), "build")
+PREFIX=DESTDIR
+
+Export(Split('env PREFIX'))
+
 SConscript('egen/SConscript')
 SConscript('test/SConscript')
