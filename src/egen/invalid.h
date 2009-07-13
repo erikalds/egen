@@ -30,6 +30,7 @@
 #include <cmath>
 #include <limits>
 #include <loki/TypeTraits.h>
+#include "egen/equality.h"
 
 // interface
 
@@ -75,29 +76,12 @@ namespace egen
       detail::user_defined_invalid<T> >::Result::get_invalid();
   }
 
-  namespace detail
-  {
-    template<typename T>
-    struct similar
-    {
-      static bool compare(const T& lhs, const T& rhs)
-      { return std::abs(lhs - rhs) < 1E-10; }
-    };
-
-    template<typename T>
-    struct exact_equal
-    {
-      static bool compare(const T& lhs, const T& rhs)
-      { return lhs == rhs; }
-    };
-  }
-
   template<typename T>
   bool invalid(const T& value)
   {
     return Loki::Select<Loki::TypeTraits<T>::isFloat,
-      detail::similar<T>,
-      detail::exact_equal<T> >::Result::compare(invalid<T>(), value);
+      similar<T>,
+      exact_equal<T> >::Result::compare(invalid<T>(), value);
   }
 
   template<typename T>
