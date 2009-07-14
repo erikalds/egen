@@ -1,0 +1,6 @@
+files
+*.log
+libegen1.substvars
+libegen1
+libegen-dev
+tmp
