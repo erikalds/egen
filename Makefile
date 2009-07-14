@@ -1,6 +1,9 @@
 all:
 	scons -C src
 
+doxygen:
+	doxygen doc/Doxyfile
+
 dpkg:
 	dpkg-buildpackage -rfakeroot
 
