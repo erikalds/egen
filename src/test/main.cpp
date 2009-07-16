@@ -69,6 +69,7 @@ test_suite* init_unit_test_suite(int argc, char* argv[])
 
   log_level level = log_warnings;
   output_format format = CLF;
+  bool progress = false;
   try
   {
     for (int i = 1; i < argc; ++i)
@@ -101,6 +102,10 @@ test_suite* init_unit_test_suite(int argc, char* argv[])
       {
 	throw 0;
       }
+      else if (argv[i] == std::string("--progress"))
+      {
+	progress = true;
+      }
     }
   }
   catch (const int& i)
@@ -118,6 +123,8 @@ test_suite* init_unit_test_suite(int argc, char* argv[])
 
   unit_test_log_t::instance().set_threshold_level(level);
   unit_test_log_t::instance().set_format(format);
+  if (progress)
+    framework::register_observer(progress_monitor_t::instance());
   
   return 0;
 }
