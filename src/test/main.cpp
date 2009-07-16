@@ -25,6 +25,7 @@
 */
 
 #include <boost/lexical_cast.hpp>
+#include <boost/progress.hpp>
 #include <boost/test/unit_test.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/unit_test_monitor.hpp>
@@ -131,5 +132,6 @@ test_suite* init_unit_test_suite(int argc, char* argv[])
 
 int main(int argc, char* argv[])
 {
+  boost::progress_timer time_display;
   return ::boost::unit_test::unit_test_main(&init_unit_test_suite, argc, argv);
 }
