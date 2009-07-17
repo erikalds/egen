@@ -49,9 +49,6 @@ namespace egen
 
     static Coordinate invalid_value() { return Coordinate(); }
 
-    template<typename U>
-    Coordinate<U> scale(const U& x_scale, const U& y_scale, const U& z_scale=invalid<U>());
-
   private:
     T m_x;
     T m_y;
@@ -69,22 +66,6 @@ namespace egen
 // implementations
 
 namespace egen {
-  template<typename T>
-  template<typename U>
-  Coordinate<U> Coordinate<T>::scale(const U& x_scale, const U& y_scale, const U& z_scale)
-  {
-    if (invalid(*this) || valid(z_scale) != valid(z()))
-      return invalid<Coordinate<U> >();
-
-    Coordinate<U> scaled;
-    scaled.x() = U(x()) * x_scale;
-    scaled.y() = U(y()) * y_scale;
-    if (valid(z_scale))
-      scaled.z() = U(z()) * z_scale;
-
-    return scaled;
-  }
-
   template<typename T>
   std::ostream& operator<<(std::ostream& out, const Coordinate<T>& p)
   {
