@@ -4,7 +4,8 @@ Import('env')
 e = env.Clone(LIBS = Split('boost_unit_test_framework-mt egen'), LIBPATH='#egen')
 
 testprog = e.Program('libegen-test',
-                     Split('main.cpp TestEquality.cpp TestInvalid.cpp TestPoint.cpp'))
+                     Split("""main.cpp TestCoordinate.cpp TestEquality.cpp TestInvalid.cpp
+                              TestPoint.cpp"""))
 e.AddPostAction(testprog, 'LD_LIBRARY_PATH=egen test/libegen-test')
 
 env.Alias("build", testprog)
