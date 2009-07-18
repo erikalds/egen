@@ -1,7 +1,7 @@
 # -*- mode: python -*-
 import os
 
-Import(Split('env PREFIX'))
+Import(Split('env PREFIX AddSOSymlinkTargetAction'))
 
 sources = Split("Angle.cpp")
 headers = Split("Angle.h Coordinate.h equality.h invalid.h Point.h Vector.h")
@@ -10,6 +10,9 @@ env.Append(SHLIBSUFFIX = '.1.0.0')
 env.Append(SHLINKFLAGS = '-Wl,-soname -Wl,libegen.so.1')
 libegen_static = env.StaticLibrary('libegen', sources)
 libegen_shared = env.SharedLibrary('libegen', sources)
+AddSOSymlinkTargetAction(env, libegen_shared)
+
+print File(libegen_shared[0]).abspath
 
 env.Install(dir = os.path.join(PREFIX, "usr", "lib"), source = [libegen_shared, libegen_static])
 env.Install(dir = os.path.join(PREFIX, "usr", "include", "egen"),
