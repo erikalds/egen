@@ -1,14 +1,9 @@
-This package was debianized by:
+This package was debianized by Erik Åldstedt Sund <erikalds@gmail.com> on
+Wed, 08 Jul 2009 19:30:04 +0200
 
-    Erik Åldstedt Sund <erikalds@gmail.com> on Wed, 08 Jul 2009 19:30:04 +0200
+It was downloaded from http://krikkit.blogsite.org
 
-It was downloaded from:
-
-    http://krikkit.blogsite.org
-
-Upstream Author(s):
-
-    Erik Åldstedt Sund <erikalds@gmail.com>
+Upstream Author: Erik Åldstedt Sund <erikalds@gmail.com>
 
 Copyright:
 
@@ -35,6 +30,6 @@ Public License can be found in `/usr/share/common-licenses/GPL'.
 
 The Debian packaging is:
 
-    Copyright C) 2009, Erik Åldstedt Sund <erikalds@gmail.com>
+    Copyright (C) 2009, Erik Åldstedt Sund <erikalds@gmail.com>
 
 and is licensed under the GPL, see above.
