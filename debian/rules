@@ -15,12 +15,12 @@
 
 
 # shared library versions, option 1
-version=0.1.0
-major=0
-# option 2, assuming the library is created as src/.libs/libfoo.so.2.0.5 or so
-#version=`ls src/.libs/lib*.so.* | \
+#version=0.1.0
+#major=0
+# option 2, assuming the library is created as src/egen/libfoo.so.2.0.5 or so
+#version=`ls src/egen/lib*.so.* | \
 # awk '{if (match($$0,/[0-9]+\.[0-9]+\.[0-9]+$$/)) print substr($$0,RSTART)}'`
-#major=`ls src/.libs/lib*.so.* | \
+#major=`ls src/egen/lib*.so.* | \
 # awk '{if (match($$0,/\.so\.[0-9]+$$/)) print substr($$0,RSTART+4)}'`
 
 configure: configure-stamp
