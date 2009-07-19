@@ -5,7 +5,7 @@ doxygen:
 	doxygen doc/Doxyfile
 
 dpkg:
-	dpkg-buildpackage -rfakeroot
+	git-buildpackage
 
 install:
 	scons -C src install
