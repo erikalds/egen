@@ -6,17 +6,19 @@ Import(Split('env PREFIX AddSOSymlinkTargetAction'))
 sources = Split("Angle.cpp")
 headers = Split("Angle.h Coordinate.h equality.h invalid.h Point.h Vector.h")
 
-env.Append(SHLIBSUFFIX = '.1.0.0')
-env.Append(SHLINKFLAGS = '-Wl,-soname -Wl,libegen.so.1')
+env.Append(SHLIBSUFFIX = '.%d.%d.%d' % (env["MAJOR_VERSION"],
+                                        env["MINOR_VERSION"],
+                                        env["REVISION_VERSION"]))
+env.Append(SHLINKFLAGS = '-Wl,-soname -Wl,libegen.so.%d' % env["MAJOR_VERSION"])
 libegen_static = env.StaticLibrary('libegen', sources)
 libegen_shared = env.SharedLibrary('libegen', sources)
 AddSOSymlinkTargetAction(env, libegen_shared)
 
-print File(libegen_shared[0]).abspath
-
-env.Install(dir = os.path.join(PREFIX, "usr", "lib"), source = [libegen_shared, libegen_static])
+lib_install = env.Install(dir = os.path.join(PREFIX, "usr", "lib"), source = libegen_shared)
+env.Install(dir = os.path.join(PREFIX, "usr", "lib"), source = libegen_static)
 env.Install(dir = os.path.join(PREFIX, "usr", "include", "egen"),
             source = headers)
+AddSOSymlinkTargetAction(env, lib_install, False)
 
 env.Alias("build", [libegen_shared, libegen_static])
 env.Alias("install", ["build",

@@ -9,12 +9,12 @@ Homepage: http://krikkit.blogsite.org/
 Package: libegen-dev
 Section: libdevel
 Architecture: any
-Depends: libegen1 (= ${binary:Version}), libloki-dev (>= 0.1.5)
+Depends: libegen0 (= ${binary:Version}), libloki-dev (>= 0.1.5)
 Description: Erik's Generic Library - Development files
  C++ library containing generic classes such as Points and
  Vectors.
 
-Package: libegen1
+Package: libegen0
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}

@@ -5,7 +5,7 @@ import os
 EnsureSConsVersion(1, 2)
 
 ## helper for the symlink targets ##########
-def AddSOSymlinkTargetAction (env, targetTrigger):
+def AddSOSymlinkTargetAction(env, targetTrigger, addCleanTarget=True):
     # add postAction to create symlinks
     if env['PLATFORM'] == "posix":
         ## add a postaction to create symbolic links, when
@@ -31,8 +31,8 @@ def AddSOSymlinkTargetAction (env, targetTrigger):
             os.chdir(Dir('%s' % libpath[0:libpath.rindex(os.path.sep)]).abspath)
             try:
                 create_or_update_symlink(lib, link2)
-                create_or_update_symlink(link2, link1)
-                create_or_update_symlink(link1, link0)
+                create_or_update_symlink(lib, link1)
+                create_or_update_symlink(lib, link0)
             finally:
                 os.chdir(cwd)
 
@@ -41,25 +41,26 @@ def AddSOSymlinkTargetAction (env, targetTrigger):
         ## add additional cleanup targets for the links
         ## FIXME: doesn't work currently, because symlinks
         ##        are not a valid Clean target for scons
-        libpath = File(targetTrigger[0]).abspath
-        lib   = os.path.basename(libpath)
-        link2 = lib[0:lib.rindex('.%d' % patch)]
-        link1 = link2[0:link2.rindex('.%d' % minor)]
-        link0 = link1[0:link1.rindex('.%d' % major)]
+        if addCleanTarget:
+            libpath = File(targetTrigger[0]).abspath
+            lib   = os.path.basename(libpath)
+            link2 = lib[0:lib.rindex('.%d' % patch)]
+            link1 = link2[0:link2.rindex('.%d' % minor)]
+            link0 = link1[0:link1.rindex('.%d' % major)]
 
-        libdir = Dir(libpath[0:libpath.rindex(os.path.sep)]).abspath
-        lnk0 = File(os.path.join(libdir, link0)).abspath
-        lnk1 = File(os.path.join(libdir, link1)).abspath
-        lnk2 = File(os.path.join(libdir, link2)).abspath
-        env.Clean(targetTrigger, [lnk0, lnk1, lnk2])
+            libdir = Dir(libpath[0:libpath.rindex(os.path.sep)]).abspath
+            lnk0 = File(os.path.join(libdir, link0)).abspath
+            lnk1 = File(os.path.join(libdir, link1)).abspath
+            lnk2 = File(os.path.join(libdir, link2)).abspath
+            env.Clean(targetTrigger, [lnk0, lnk1, lnk2])
 
 
 Export ('AddSOSymlinkTargetAction')
 
 
 env = Environment(CPPPATH=[".", ".."], CPPDEFINES="DEBUG", CPPFLAGS="--param inline-unit-growth=500 --param large-function-growth=5000 --param max-inline-insns-single=5000 -Wall -Wctor-dtor-privacy -Wstrict-null-sentinel -Woverloaded-virtual -Wextra -Wunused -Wswitch -Wreorder -Wformat-y2k -Wformat-security -Wuninitialized -Winit-self -Wmissing-include-dirs -Wswitch-enum -Wfloat-equal -ggdb -O2",
-                  MAJOR_VERSION=1,
-                  MINOR_VERSION=0,
+                  MAJOR_VERSION=0,
+                  MINOR_VERSION=1,
                   REVISION_VERSION=0)
 
 conf = Configure(env)
@@ -84,9 +85,11 @@ env.Decider("timestamp-newer")
 DESTDIR=os.getenv("DESTDIR")
 if not DESTDIR:
     DESTDIR=os.path.join(os.getcwd(), "build")
-PREFIX=DESTDIR
+PREFIX=Dir(DESTDIR).abspath
 
 Export(Split('env PREFIX'))
 
 SConscript('egen/SConscript')
 SConscript('test/SConscript')
+
+env.Clean('build', 'config.log')
