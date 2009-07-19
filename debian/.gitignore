@@ -1,6 +1,7 @@
 files
 *.log
-libegen1.substvars
-libegen1
+*.debhelper
+libegen0.substvars
+libegen0
 libegen-dev
 tmp
