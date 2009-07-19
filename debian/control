@@ -1,7 +1,7 @@
 Source: libegen
 Priority: extra
 Maintainer: Erik Åldstedt Sund <erikalds@gmail.com>
-Build-Depends: debhelper (>= 7), scons (>= 1.2.0), libloki-dev (>= 0.1.5)
+Build-Depends: debhelper (>= 7), scons (>= 1.2.0), libboost1.37-dev (>= 1.37.0), libboost-test1.37-dev (>= 1.37.0)
 Standards-Version: 3.8.0
 Section: libs
 Homepage: http://krikkit.blogsite.org/
@@ -9,7 +9,7 @@ Homepage: http://krikkit.blogsite.org/
 Package: libegen-dev
 Section: libdevel
 Architecture: any
-Depends: libegen0 (= ${binary:Version}), libloki-dev (>= 0.1.5)
+Depends: libegen0 (= ${binary:Version})
 Description: Erik's Generic Library - Development files
  C++ library containing generic classes such as Points and
  Vectors.

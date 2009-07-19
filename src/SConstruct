@@ -39,8 +39,6 @@ def AddSOSymlinkTargetAction(env, targetTrigger, addCleanTarget=True):
         env.AddPostAction(targetTrigger, Action(createSOLinks))
 
         ## add additional cleanup targets for the links
-        ## FIXME: doesn't work currently, because symlinks
-        ##        are not a valid Clean target for scons
         if addCleanTarget:
             libpath = File(targetTrigger[0]).abspath
             lib   = os.path.basename(libpath)
@@ -54,30 +52,52 @@ def AddSOSymlinkTargetAction(env, targetTrigger, addCleanTarget=True):
             lnk2 = File(os.path.join(libdir, link2)).abspath
             env.Clean(targetTrigger, [lnk0, lnk1, lnk2])
 
-
 Export ('AddSOSymlinkTargetAction')
 
 
-env = Environment(CPPPATH=[".", ".."], CPPDEFINES="DEBUG", CPPFLAGS="--param inline-unit-growth=500 --param large-function-growth=5000 --param max-inline-insns-single=5000 -Wall -Wctor-dtor-privacy -Wstrict-null-sentinel -Woverloaded-virtual -Wextra -Wunused -Wswitch -Wreorder -Wformat-y2k -Wformat-security -Wuninitialized -Winit-self -Wmissing-include-dirs -Wswitch-enum -Wfloat-equal -ggdb -O2",
+def checkForGCCOption(conf,option):
+    """Check if compiler supports specified option"""
+    conf.Message("Checking whether CC supports "+option+"... ")
+    lastCFLAGS=conf.env['CCFLAGS']
+    conf.env.Append(CCFLAGS = option)
+    rc = conf.TryCompile("void dummy(void); void dummy(void) {}",'.c')
+    if not rc:
+        conf.env.Replace(CCFLAGS = lastCFLAGS)
+
+    conf.Result(rc)
+    return rc 
+
+env = Environment(CPPPATH=[".", ".."],
+                  CPPDEFINES=["DEBUG"],
+                  CPPFLAGS=[],
                   MAJOR_VERSION=0,
                   MINOR_VERSION=1,
                   REVISION_VERSION=0)
 
-conf = Configure(env)
+conf = Configure(env,
+                 { "CheckForGccOption": checkForGCCOption } )
 
-for hdr in ('loki/TypeTraits.h', 'boost/lexical_cast.hpp',
-            'boost/test/unit_test.hpp', 'boost/test/unit_test_log.hpp',
-            'boost/test/unit_test_monitor.hpp',
-            'boost/test/impl/unit_test_main.ipp',
-            'boost/test/impl/framework.ipp'):
+WantedCPPFLAGS=["--param inline-unit-growth=500",
+                "--param large-function-growth=5000",
+                "--param max-inline-insns-single=5000",
+                "-Wall", "-Wctor-dtor-privacy", "-Wstrict-null-sentinel",
+                "-Woverloaded-virtual", "-Wextra", "-Wunused", "-Wswitch",
+                "-Wreorder", "-Wformat-y2k", "-Wformat-security",
+                "-Wuninitialized", "-Winit-self", "-Wmissing-include-dirs",
+                "-Wswitch-enum", "-Wfloat-equal", "-ggdb", "-O2"]
+for flag in WantedCPPFLAGS:
+    conf.CheckForGccOption(flag)
+
+for hdr in ('boost/lexical_cast.hpp', 'boost/mpl/if.hpp',
+            'boost/type_traits.hpp'):
     if not conf.CheckCXXHeader(hdr):
         print "We need C++ header %s." % hdr
         Exit(1)
 
-for lib in ('loki', 'boost_unit_test_framework-mt'):
-    if not conf.CheckLib(lib, language="C++"):
-        print "We need C++ library %s" % lib
-        Exit(1)
+# for lib in ('boost_unit_test_framework-mt',):
+#     if not conf.CheckLib(lib, language="C++"):
+#         print "We need C++ library %s" % lib
+#         Exit(1)
 
 env = conf.Finish()
 env.Decider("timestamp-newer")

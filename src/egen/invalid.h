@@ -29,7 +29,8 @@
 
 #include <cmath>
 #include <limits>
-#include <loki/TypeTraits.h>
+#include <boost/mpl/if.hpp>
+#include <boost/type_traits.hpp>
 #include "egen/equality.h"
 
 // interface
@@ -71,17 +72,17 @@ namespace egen
   template<typename T>
   T invalid()
   {
-    return Loki::Select<Loki::TypeTraits<T>::isArith,
+    return boost::mpl::if_<boost::is_arithmetic<T>,
       detail::arithmetic_invalid<T>,
-      detail::user_defined_invalid<T> >::Result::get_invalid();
+      detail::user_defined_invalid<T> >::type::get_invalid();
   }
 
   template<typename T>
   bool invalid(const T& value)
   {
-    return Loki::Select<Loki::TypeTraits<T>::isFloat,
+    return boost::mpl::if_<boost::is_floating_point<T>,
       similar<T>,
-      exact_equal<T> >::Result::compare(invalid<T>(), value);
+      exact_equal<T> >::type::compare(invalid<T>(), value);
   }
 
   template<typename T>
