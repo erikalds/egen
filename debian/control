@@ -1,7 +1,7 @@
 Source: libegen
 Priority: extra
 Maintainer: Erik Åldstedt Sund <erikalds@gmail.com>
-Build-Depends: debhelper (>= 7), scons (>= 1.2.0), libboost1.37-dev (>= 1.37.0), libboost-test1.37-dev (>= 1.37.0)
+Build-Depends: debhelper (>= 7), scons (>= 1.2.0), libboost-dev (>= 1.37.0), libboost-test-dev (>= 1.37.0)
 Standards-Version: 3.8.0
 Section: libs
 Homepage: http://krikkit.blogsite.org/
