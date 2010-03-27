@@ -67,6 +67,12 @@ namespace egen
     {
       static T get_invalid() { return T::invalid_value(); }
     };
+
+    template<>
+    struct user_defined_invalid<std::string>
+    {
+      static std::string get_invalid() { return "N/A"; }
+    };
   }
 
   template<typename T>

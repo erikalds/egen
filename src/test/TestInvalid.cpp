@@ -71,6 +71,11 @@ BOOST_FIXTURE_TEST_CASE(test_invalid_user_defined_class, F)
   BOOST_CHECK_EQUAL(A::invalid_value(), egen::invalid<A>());
 }
 
+BOOST_FIXTURE_TEST_CASE(test_invalid_string, F)
+{
+  BOOST_CHECK(egen::invalid<std::string>(egen::invalid<std::string>()));
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 /*
