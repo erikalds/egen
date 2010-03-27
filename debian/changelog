@@ -1,3 +1,9 @@
+libegen (0.1.1) karmic; urgency=low
+
+  * Added invalid value for std::string.
+
+ -- Erik Åldstedt Sund <erikalds@gmail.com>  Sat, 27 Mar 2010 09:06:08 +0100
+
 libegen (0.1) unstable; urgency=low
 
   * Initial Release.
