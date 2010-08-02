@@ -4,7 +4,7 @@ libegen (0.2) lucid; urgency=low
   * Added mut::scale function
   * Recompiled for lucid lynx. 
 
- -- Erik Åldstedt Sund <erikalds@traal>  Mon, 02 Aug 2010 21:54:47 +0200
+ -- Erik Åldstedt Sund <erikalds@gmail.com>  Mon, 02 Aug 2010 21:54:47 +0200
 
 libegen (0.1.1) karmic; urgency=low
 
