@@ -20,8 +20,8 @@ if not conf.CheckLib("boost_unit_test_framework-mt", language="C++") and \
 e = conf.Finish()
 
 testprog = e.Program('libegen-test',
-                     Split("""main.cpp TestCoordinate.cpp TestEquality.cpp TestInvalid.cpp
-                              TestPoint.cpp"""))
+                     Split("""main.cpp TestCoordinate.cpp TestEquality.cpp
+                              TestInvalid.cpp TestMut.cpp TestPoint.cpp"""))
 e.AddPostAction(testprog, 'LD_LIBRARY_PATH=egen test/libegen-test')
 
 env.Alias("build", testprog)
