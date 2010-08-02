@@ -44,89 +44,9 @@ void std_exception_handler(const std::exception& e)
   BOOST_ERROR(std::string("Caught std::exception: ") + e.what());
 }
 
-void usage_and_exit(const std::string& prog_name, const std::string& msg,
-		    int exit_code)
-{
-  std::cout << prog_name << ": unit test execution application." << std::endl;
-  std::cout << std::endl;
-  if (!msg.empty())
-  {
-    std::cout << "Exit reason: " << msg << std::endl;
-    std::cout << std::endl;
-  }
-
-  std::cout << "Available options are:" << std::endl;
-  std::cout << " --level <[0-8]>\tSet log level (0: verbose, 8 nothing)"
-	    << std::endl;
-  std::cout << " --format <(CLF|XML)>\tSet output format." << std::endl;
-  std::cout << " -h|--help\t\tShow this help message." << std::endl;
-  std::cout << std::endl;
-  exit(exit_code);
-}
-
-test_suite* init_unit_test_suite(int argc, char* argv[])
+test_suite* init_unit_test_suite(int /*argc*/, char* /*argv*/[])
 {
   unit_test_monitor.register_exception_translator<std::exception>(&std_exception_handler);
-
-  log_level level = log_warnings;
-  output_format format = CLF;
-  bool progress = false;
-  try
-  {
-    for (int i = 1; i < argc; ++i)
-    {
-      if (argv[i] == std::string("--level"))
-      {
-	if (i >= argc - 1)
-	  throw std::runtime_error("Missing argument to --level.");
-
-	int n = boost::lexical_cast<int>(argv[++i]);
-	if (n >= 0 && n <= 8)
-	  level = log_level(n);
-	else
-	  throw std::runtime_error("--level argument out of range.");
-      }
-      else if (argv[i] == std::string("--format"))
-      {
-	if (i >= argc - 1)
-	  throw std::runtime_error("Missing argument to --format.");
-
-	std::string s(argv[++i]);
-	if (s == "CLF")
-	  format = CLF;
-	else if (s == "XML")
-	  format = XML;
-	else
-	  throw std::runtime_error("--format argument not recognized.");
-      }
-      else if (argv[i] == std::string("--help") || argv[i] == std::string("-h"))
-      {
-	throw 0;
-      }
-      else if (argv[i] == std::string("--progress"))
-      {
-	progress = true;
-      }
-    }
-  }
-  catch (const int& i)
-  {
-    usage_and_exit(argv[0], "", i);
-  }
-  catch (const std::bad_cast& e)
-  {
-    usage_and_exit(argv[0], e.what(), -2);
-  }
-  catch (const std::runtime_error& e)
-  {
-    usage_and_exit(argv[0], e.what(), -1);
-  }
-
-  unit_test_log_t::instance().set_threshold_level(level);
-  unit_test_log_t::instance().set_format(format);
-  if (progress)
-    framework::register_observer(progress_monitor_t::instance());
-  
   return 0;
 }
 
