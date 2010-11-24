@@ -21,7 +21,8 @@ e = conf.Finish()
 
 testprog = e.Program('libegen-test',
                      Split("""main.cpp TestCoordinate.cpp TestEquality.cpp
-                              TestInvalid.cpp TestMut.cpp TestPoint.cpp"""))
+                              TestInvalid.cpp TestMut.cpp TestMapLookup.cpp
+                              TestPoint.cpp"""))
 e.AddPostAction(testprog, 'LD_LIBRARY_PATH=egen test/libegen-test')
 
 env.Alias("build", testprog)

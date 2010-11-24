@@ -4,7 +4,7 @@ import os
 Import(Split('env PREFIX AddSOSymlinkTargetAction'))
 
 sources = Split("Angle.cpp")
-headers = Split("Angle.h Coordinate.h equality.h invalid.h mut.h Point.h Vector.h")
+headers = Split("Angle.h Coordinate.h equality.h invalid.h lookup.h mut.h Point.h Vector.h")
 
 env.Append(SHLIBSUFFIX = '.%d.%d.%d' % (env["MAJOR_VERSION"],
                                         env["MINOR_VERSION"],
