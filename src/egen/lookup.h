@@ -27,6 +27,7 @@
     NORWAY
 */
 
+#include <map>
 #include "egen/invalid.h"
 
 namespace egen
