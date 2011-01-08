@@ -1,3 +1,9 @@
+libegen (0.3.1) maverick; urgency=low
+
+  * Fixed self-containment issue with lookup.h.
+
+ -- Erik Åldstedt Sund <erikalds@gmail.com>  Sat, 08 Jan 2011 14:50:20 +0100
+
 libegen (0.3) maverick; urgency=low
 
   * Added map lookup function.
