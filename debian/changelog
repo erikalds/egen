@@ -1,3 +1,10 @@
+libegen (0.4.0) natty; urgency=low
+
+  * Added ConcurrentQueue header.
+  * Enabled C++0x support.
+
+ -- Erik Åldstedt Sund <erikalds@gmail.com>  Thu, 07 Jul 2011 00:13:19 +0200
+
 libegen (0.3.1) maverick; urgency=low
 
   * Fixed self-containment issue with lookup.h.
