@@ -65,7 +65,7 @@ def checkForGCCOption(conf,option):
         conf.env.Replace(CCFLAGS = lastCFLAGS)
 
     conf.Result(rc)
-    return rc 
+    return rc
 
 env = Environment(CPPPATH=[".", ".."],
                   CPPDEFINES=["DEBUG"],
@@ -84,12 +84,12 @@ WantedCPPFLAGS=["--param inline-unit-growth=500",
                 "-Woverloaded-virtual", "-Wextra", "-Wunused", "-Wswitch",
                 "-Wreorder", "-Wformat-y2k", "-Wformat-security",
                 "-Wuninitialized", "-Winit-self", "-Wmissing-include-dirs",
-                "-Wswitch-enum", "-Wfloat-equal", "-ggdb", "-O2"]
+                "-Wswitch-enum", "-Wfloat-equal", "-ggdb", "-O2", '-std=c++0x']
 for flag in WantedCPPFLAGS:
     conf.CheckForGccOption(flag)
 
 for hdr in ('boost/lexical_cast.hpp', 'boost/mpl/if.hpp',
-            'boost/type_traits.hpp'):
+            'boost/type_traits.hpp', 'boost/optional.hpp', 'atomic'):
     if not conf.CheckCXXHeader(hdr):
         print "We need C++ header %s." % hdr
         Exit(1)
