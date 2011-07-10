@@ -126,6 +126,20 @@ namespace egen
       return boost::optional<T>();  // ... and report empty queue
     }
 
+    /// Check if the queue is empty.
+    ///
+    /// Remember that this queue is meant to be shared among threads, which 
+    /// means an assert like this may fail (!): assert(q.empty() == q.empty()).
+    bool empty() const
+    {
+      while (m_consumer_lock.exchange(true)) {}  // acquire exclusivity
+
+      Node* the_next = m_first->m_next;
+      bool is_empty = (the_next == nullptr);
+      m_consumer_lock = false;  // release exclusivity
+      return is_empty;
+    }
+
   private:
     /// Internal node of the singly linked list.
     struct Node
@@ -144,7 +158,7 @@ namespace egen
     char pad1[CACHE_LINE_SIZE - sizeof(Node*)];
 
     // shared among consumers
-    std::atomic<bool> m_consumer_lock;
+    mutable std::atomic<bool> m_consumer_lock;
     char pad2[CACHE_LINE_SIZE - sizeof(atomic<bool>)];
 
     // for one producer at a time

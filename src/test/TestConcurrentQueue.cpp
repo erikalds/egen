@@ -79,6 +79,19 @@ BOOST_FIXTURE_TEST_CASE(test_is_fifo, F)
   BOOST_CHECK(!queue.pop_front());
 }
 
+BOOST_FIXTURE_TEST_CASE(test_empty_on_empty_queue, F)
+{
+  BOOST_CHECK(queue.empty());
+}
+
+BOOST_FIXTURE_TEST_CASE(test_empty_on_non_empty_queue, F)
+{
+  queue.push_back(42);
+  BOOST_CHECK(!queue.empty());
+  BOOST_CHECK(bool(queue.pop_front()));
+  BOOST_CHECK(queue.empty());
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 /*
