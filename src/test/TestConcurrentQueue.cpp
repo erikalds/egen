@@ -1,6 +1,6 @@
 /* Source file created: 2011-07-06
 
-  hourtracker - C++ web application for administration of work hours
+  egen - Erik's generic library
   Copyright (C) 2011 Erik Åldstedt Sund
 
   This program is free software: you can redistribute it and/or modify
