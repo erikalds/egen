@@ -1,3 +1,9 @@
+libegen (0.4.0.1) natty; urgency=low
+
+  * Added bool ConcurrentQueue::empty() const
+
+ -- Erik Åldstedt Sund <erikalds@traal>  Sun, 10 Jul 2011 10:47:19 +0200
+
 libegen (0.4.0) natty; urgency=low
 
   * Added ConcurrentQueue header.
