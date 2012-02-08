@@ -128,7 +128,7 @@ namespace egen
 
     /// Check if the queue is empty.
     ///
-    /// Remember that this queue is meant to be shared among threads, which 
+    /// Remember that this queue is meant to be shared among threads, which
     /// means an assert like this may fail (!): assert(q.empty() == q.empty()).
     bool empty() const
     {
@@ -159,7 +159,7 @@ namespace egen
 
     // shared among consumers
     mutable std::atomic<bool> m_consumer_lock;
-    char pad2[CACHE_LINE_SIZE - sizeof(atomic<bool>)];
+    char pad2[CACHE_LINE_SIZE - sizeof(std::atomic<bool>)];
 
     // for one producer at a time
     Node* m_last;
@@ -167,7 +167,7 @@ namespace egen
 
     // shared among producers
     std::atomic<bool> m_producer_lock;
-    char pad4[CACHE_LINE_SIZE - sizeof(atomic<bool>)];
+    char pad4[CACHE_LINE_SIZE - sizeof(std::atomic<bool>)];
   };
 
 } // namespace egen
