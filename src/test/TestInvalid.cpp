@@ -27,7 +27,7 @@
 #include <boost/test/unit_test.hpp>
 #include "egen/invalid.h"
 
-BOOST_AUTO_TEST_SUITE(TestInvalid);
+BOOST_AUTO_TEST_SUITE(TestInvalid)
 
 struct F
 {

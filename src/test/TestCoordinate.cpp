@@ -27,7 +27,7 @@
 #include <boost/test/unit_test.hpp>
 #include "egen/Coordinate.h"
 
-BOOST_AUTO_TEST_SUITE(TestCoordinate);
+BOOST_AUTO_TEST_SUITE(TestCoordinate)
 
 struct F
 {

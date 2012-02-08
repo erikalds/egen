@@ -27,7 +27,7 @@
 #include <boost/test/unit_test.hpp>
 #include "egen/Point.h"
 
-BOOST_AUTO_TEST_SUITE(TestPoint);
+BOOST_AUTO_TEST_SUITE(TestPoint)
 
 struct F
 {

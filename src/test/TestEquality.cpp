@@ -28,7 +28,7 @@
 #include <boost/test/unit_test.hpp>
 #include "egen/equality.h"
 
-BOOST_AUTO_TEST_SUITE(TestEquality);
+BOOST_AUTO_TEST_SUITE(TestEquality)
 
 struct F
 {

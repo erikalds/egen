@@ -29,7 +29,7 @@
 #include <map>
 #include "egen/lookup.h"
 
-BOOST_AUTO_TEST_SUITE(testMapLookup);
+BOOST_AUTO_TEST_SUITE(testMapLookup)
 
 struct F
 {

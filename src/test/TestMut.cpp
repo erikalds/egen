@@ -29,7 +29,7 @@
 #include <boost/numeric/interval.hpp>
 #include <egen/mut.h>
 
-BOOST_AUTO_TEST_SUITE(testMut);
+BOOST_AUTO_TEST_SUITE(testMut)
 
 struct F
 {

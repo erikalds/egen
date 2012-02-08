@@ -30,7 +30,7 @@
 
 using namespace std;
 
-BOOST_AUTO_TEST_SUITE(testConcurrentQueue);
+BOOST_AUTO_TEST_SUITE(testConcurrentQueue)
 
 struct F
 {
