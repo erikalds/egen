@@ -1,3 +1,9 @@
+libegen (0.4.1) oneiric; urgency=low
+
+  * Now supporting only C++11.
+
+ -- Erik Åldstedt Sund <erikalds@gmail.com>  Wed, 08 Feb 2012 13:41:08 +0100
+
 libegen (0.4.0.1) natty; urgency=low
 
   * Added bool ConcurrentQueue::empty() const
