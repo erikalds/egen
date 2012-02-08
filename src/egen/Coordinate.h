@@ -40,12 +40,12 @@ namespace egen
     explicit Coordinate(const T& x, const T& y, const T& z=invalid<T>()) :
       m_x(x), m_y(y), m_z(z) {}
 
-    T  x() const { return m_x; }
-    T& x()       { return m_x; }
-    T  y() const { return m_y; }
-    T& y()       { return m_y; }
-    T  z() const { return m_z; }
-    T& z()       { return m_z; }
+    T x() const { return m_x; }
+    T& x() { return m_x; }
+    T y() const { return m_y; }
+    T& y() { return m_y; }
+    T z() const { return m_z; }
+    T& z() { return m_z; }
 
     static Coordinate invalid_value() { return Coordinate(); }
 
