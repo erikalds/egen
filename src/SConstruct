@@ -80,11 +80,25 @@ conf = Configure(env,
 WantedCPPFLAGS=["--param inline-unit-growth=500",
                 "--param large-function-growth=5000",
                 "--param max-inline-insns-single=5000",
-                "-Wall", "-Wctor-dtor-privacy", "-Wstrict-null-sentinel",
-                "-Woverloaded-virtual", "-Wextra", "-Wunused", "-Wswitch",
-                "-Wreorder", "-Wformat-y2k", "-Wformat-security",
-                "-Wuninitialized", "-Winit-self", "-Wmissing-include-dirs",
-                "-Wswitch-enum", "-Wfloat-equal", "-ggdb", "-O2", '-std=c++0x']
+                "-Wall",
+                "-Wctor-dtor-privacy",
+                "-Wstrict-null-sentinel",
+                "-Woverloaded-virtual",
+                "-Wextra",
+                "-Wunused",
+                "-Wswitch",
+                "-Wreorder",
+                "-Wformat-y2k",
+                "-Wformat-security",
+                "-Wuninitialized",
+                "-Winit-self",
+                "-Wmissing-include-dirs",
+                "-Wswitch-enum",
+                "-Wfloat-equal",
+                "-pedantic",
+                "-ggdb",
+                "-O2",
+                '-std=c++0x']
 for flag in WantedCPPFLAGS:
     conf.CheckForGccOption(flag)
 
@@ -93,11 +107,6 @@ for hdr in ('boost/lexical_cast.hpp', 'boost/mpl/if.hpp',
     if not conf.CheckCXXHeader(hdr):
         print "We need C++ header %s." % hdr
         Exit(1)
-
-# for lib in ('boost_unit_test_framework-mt',):
-#     if not conf.CheckLib(lib, language="C++"):
-#         print "We need C++ library %s" % lib
-#         Exit(1)
 
 env = conf.Finish()
 env.Decider("timestamp-newer")
