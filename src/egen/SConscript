@@ -27,3 +27,5 @@ env.Alias("install", ["build",
 
 env.Default(None)
 env.Default("build")
+
+Return(Split("libegen_static libegen_shared"))

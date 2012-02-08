@@ -118,7 +118,8 @@ PREFIX=Dir(DESTDIR).abspath
 
 Export(Split('env PREFIX'))
 
-SConscript('egen/SConscript')
+libegen_static, libegen_shared = SConscript('egen/SConscript')
+Export(Split("libegen_static libegen_shared")
 SConscript('test/SConscript')
 
 env.Clean('build', 'config.log')

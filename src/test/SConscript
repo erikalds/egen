@@ -1,7 +1,7 @@
 # -*- mode: python -*-
-Import('env')
+Import('env libegen_shared')
 
-e = env.Clone(LIBPATH='#egen')
+e = env.Clone()
 conf = Configure(e)
 
 for hdr in ('boost/test/unit_test.hpp', 'boost/test/unit_test_log.hpp',
@@ -19,11 +19,18 @@ if not conf.CheckLib("boost_unit_test_framework-mt", language="C++") and \
 
 e = conf.Finish()
 
-testprog = e.Program('libegen-test',
-                     Split("""main.cpp TestConcurrentQueue.cpp
-                              TestCoordinate.cpp TestEquality.cpp
-                              TestInvalid.cpp TestMut.cpp TestMapLookup.cpp
-                              TestPoint.cpp"""))
+cpp_files = ['main.cpp',
+             'TestConcurrentQueue.cpp',
+             'TestCoordinate.cpp',
+             'TestEquality.cpp',
+             'TestInvalid.cpp',
+             'TestMut.cpp',
+             'TestMapLookup.cpp',
+             'TestPoint.cpp']
+internal_libs = [libegen_shared]
+deps = cpp_files + internal_libs
+
+testprog = e.Program('libegen-test', deps)
 e.AddPostAction(testprog, 'LD_LIBRARY_PATH=egen test/libegen-test')
 
 env.Alias("build", testprog)
