@@ -40,17 +40,17 @@ namespace egen
   {
     template<typename T>
     struct small_limit;
- 
+
     template<>
     struct small_limit<float>
     {
-      static const float value = 1.0E-6;
+      static constexpr float value = 1.0E-6;
     };
 
     template<>
     struct small_limit<double>
     {
-      static const double value = 1.0E-10;
+      static constexpr double value = 1.0E-10;
     };
   }
 
