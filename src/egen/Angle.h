@@ -39,6 +39,7 @@ namespace egen
 
     bool operator==(const Angle& other) const;
     bool operator<(const Angle& other) const;
+    Angle operator-(const Angle& other) const;
 
     friend std::ostream& operator<<(std::ostream& out, const Angle& a);
 
