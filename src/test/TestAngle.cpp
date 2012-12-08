@@ -91,6 +91,17 @@ BOOST_FIXTURE_TEST_CASE(greaterThanOperator, F)
   BOOST_CHECK(!(beta > beta));
 }
 
+BOOST_FIXTURE_TEST_CASE(greaterThanOrEqualOperator, F)
+{
+  Angle alpha = Angle::deg(0);
+  Angle beta = Angle::deg(1);
+  BOOST_CHECK_GE(beta, alpha);
+  BOOST_CHECK_GE(beta, beta);
+  BOOST_CHECK(beta >= alpha);
+  BOOST_CHECK(!(alpha >= beta));
+  BOOST_CHECK(beta >= beta);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 /*

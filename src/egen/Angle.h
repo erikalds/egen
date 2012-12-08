@@ -57,6 +57,8 @@ namespace egen
   { return alpha < beta || alpha == beta; }
   inline bool operator>(const Angle& alpha, const Angle& beta)
   { return !(alpha <= beta); }
+  inline bool operator>=(const Angle& alpha, const Angle& beta)
+  { return !(alpha < beta); }
 } // namespace egen
 
 #endif // ANGLE_H_
