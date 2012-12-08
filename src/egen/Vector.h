@@ -39,6 +39,8 @@ namespace egen
     Vector(const T& x, const T& y, const T& z=invalid<T>()) : Coordinate<T>(x, y, z) {}
     Vector(const Coordinate<T>& other) : Coordinate<T>(other) {}
     operator Coordinate<T>() const { return *this; }
+
+    double length() const { return 0.0; }
   };
 } // namespace egen
 
