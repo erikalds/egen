@@ -67,6 +67,18 @@ BOOST_FIXTURE_TEST_CASE(oneAngleLessThanTheOther_ltOpWorks, F)
   BOOST_CHECK_LT(alpha, beta);
   BOOST_CHECK(alpha < beta);
   BOOST_CHECK(!(beta < alpha));
+  BOOST_CHECK(!(beta < beta));
+}
+
+BOOST_FIXTURE_TEST_CASE(lessThanOrEqualOperator, F)
+{
+  Angle alpha = Angle::deg(0);
+  Angle beta = Angle::deg(1);
+  BOOST_CHECK_LE(alpha, beta);
+  BOOST_CHECK_LE(alpha, alpha);
+  BOOST_CHECK(alpha <= beta);
+  BOOST_CHECK(!(beta <= alpha));
+  BOOST_CHECK(beta <= beta);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
