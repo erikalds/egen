@@ -19,14 +19,7 @@ if not conf.CheckLib("boost_unit_test_framework-mt", language="C++") and \
 
 e = conf.Finish()
 
-cpp_files = ['main.cpp',
-             'TestConcurrentQueue.cpp',
-             'TestCoordinate.cpp',
-             'TestEquality.cpp',
-             'TestInvalid.cpp',
-             'TestMut.cpp',
-             'TestMapLookup.cpp',
-             'TestPoint.cpp']
+cpp_files = env.Glob("*.cpp")
 internal_libs = [libegen_shared]
 deps = cpp_files + internal_libs
 
