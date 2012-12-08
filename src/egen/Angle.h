@@ -27,6 +27,8 @@
     NORWAY
 */
 
+#include <iosfwd>
+
 namespace egen
 {
   class Angle
@@ -34,7 +36,18 @@ namespace egen
   public:
     static Angle degrees(double angle);
     static Angle radians(double angle);
+
+    bool operator==(const Angle& other) const;
+
+    friend std::ostream& operator<<(std::ostream& out, const Angle& a);
+
+  private:
+    Angle(double rad);
+
+    double rad;
   };
+
+  std::ostream& operator<<(std::ostream& out, const Angle& a);
 } // namespace egen
 
 #endif // ANGLE_H_
