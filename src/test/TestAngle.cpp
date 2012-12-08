@@ -102,7 +102,6 @@ BOOST_FIXTURE_TEST_CASE(greaterThanOrEqualOperator, F)
   BOOST_CHECK(beta >= beta);
 }
 
-// we need op- and op* to be able to use CHECK_CLOSE
 BOOST_FIXTURE_TEST_CASE(minusOperator, F)
 {
   Angle alpha = Angle::deg(45.0);
@@ -123,6 +122,17 @@ BOOST_FIXTURE_TEST_CASE(negateOperator, F)
   Angle alpha = Angle::deg(45.0);
   BOOST_CHECK_LT(-alpha, Angle::deg(-45.0 + 1e-6));
   BOOST_CHECK_GT(-alpha, Angle::deg(-45.0 - 1e-6));
+}
+
+BOOST_FIXTURE_TEST_CASE(plusOperator, F)
+{
+  Angle alpha = Angle::deg(45.0);
+  Angle beta = Angle::deg(30.0);
+  BOOST_CHECK_LT(alpha + beta, Angle::deg(75.0 + 1e-6));
+  BOOST_CHECK_GT(alpha + beta, Angle::deg(75.0 - 1e-6));
+
+  BOOST_CHECK_LT(alpha + alpha, Angle::deg(90.0 + 1e-6));
+  BOOST_CHECK_GT(alpha + alpha, Angle::deg(90.0 - 1e-6));
 }
 
 BOOST_AUTO_TEST_SUITE_END()
