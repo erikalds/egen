@@ -118,6 +118,13 @@ BOOST_FIXTURE_TEST_CASE(multOperator, F)
   BOOST_CHECK_GT(2.0 * alpha, Angle::deg(45.0 * 2.0 - 1e-6));
 }
 
+BOOST_FIXTURE_TEST_CASE(negateOperator, F)
+{
+  Angle alpha = Angle::deg(45.0);
+  BOOST_CHECK_LT(-alpha, Angle::deg(-45.0 + 1e-6));
+  BOOST_CHECK_GT(-alpha, Angle::deg(-45.0 - 1e-6));
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 /*

@@ -64,6 +64,8 @@ namespace egen
 
   inline Angle operator*(double scalar, const Angle& alpha)
   { return alpha * scalar; }
+  inline Angle operator-(const Angle& alpha)
+  { return alpha * -1; }
 } // namespace egen
 
 #endif // ANGLE_H_
