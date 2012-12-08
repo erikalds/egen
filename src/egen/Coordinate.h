@@ -39,6 +39,7 @@ namespace egen
     Coordinate() : m_x(invalid<T>()), m_y(invalid<T>()), m_z(invalid<T>()) {}
     explicit Coordinate(const T& x, const T& y, const T& z=invalid<T>()) :
       m_x(x), m_y(y), m_z(z) {}
+    virtual ~Coordinate() {}
 
     T x() const { return m_x; }
     T& x() { return m_x; }
