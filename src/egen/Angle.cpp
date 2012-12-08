@@ -43,29 +43,29 @@ namespace egen
     }
   }
 
-  Angle Angle::degrees(double angle)
+  Angle Angle::deg(double angle)
   {
     return Angle(deg2rad(angle));
   }
 
-  Angle Angle::radians(double angle)
+  Angle Angle::rad(double angle)
   {
     return Angle(angle);
   }
 
   bool Angle::operator==(const Angle& other) const
   {
-    return rad == other.rad;
+    return angle == other.angle;
   }
 
   Angle::Angle(double rad) :
-    rad(rad)
+    angle(rad)
   {
   }
 
   std::ostream& operator<<(std::ostream& out, const Angle& a)
   {
-    return out << rad2deg(a.rad) << " deg";
+    return out << rad2deg(a.angle) << " deg";
   }
 
 } // namespace egen

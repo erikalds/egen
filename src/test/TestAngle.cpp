@@ -40,22 +40,23 @@ struct F
 
 BOOST_FIXTURE_TEST_CASE(twoZeroAngles_areEqual, F)
 {
-  Angle alpha = Angle::degrees(0);
-  Angle beta = Angle::degrees(0);
+  Angle alpha = Angle::deg(0);
+  Angle beta = Angle::deg(0);
   BOOST_CHECK_EQUAL(alpha, beta);
 }
 
 BOOST_FIXTURE_TEST_CASE(twoDifferentAngles_areNotEqual, F)
 {
-  Angle alpha = Angle::degrees(0);
-  Angle beta = Angle::degrees(1);
+  Angle alpha = Angle::deg(0);
+  Angle beta = Angle::deg(1);
   BOOST_CHECK_NE(alpha, beta);
+  BOOST_CHECK(alpha != beta);
 }
 
 BOOST_FIXTURE_TEST_CASE(twoEqualAnglesRadiansAndDegrees_areEqual, F)
 {
-  Angle alpha = Angle::degrees(90);
-  Angle beta = Angle::radians(M_PI / 2);
+  Angle alpha = Angle::deg(90);
+  Angle beta = Angle::rad(M_PI / 2);
   BOOST_CHECK_EQUAL(alpha, beta);
 }
 

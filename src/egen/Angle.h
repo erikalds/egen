@@ -34,8 +34,8 @@ namespace egen
   class Angle
   {
   public:
-    static Angle degrees(double angle);
-    static Angle radians(double angle);
+    static Angle deg(double angle);
+    static Angle rad(double angle);
 
     bool operator==(const Angle& other) const;
 
@@ -44,10 +44,13 @@ namespace egen
   private:
     Angle(double rad);
 
-    double rad;
+    double angle;
   };
 
   std::ostream& operator<<(std::ostream& out, const Angle& a);
+
+  inline bool operator!=(const Angle& alpha, const Angle& beta)
+  { return !(alpha == beta); }
 } // namespace egen
 
 #endif // ANGLE_H_
