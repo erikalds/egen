@@ -60,6 +60,14 @@ BOOST_FIXTURE_TEST_CASE(twoEqualAnglesRadiansAndDegrees_areEqual, F)
   BOOST_CHECK_EQUAL(alpha, beta);
 }
 
+BOOST_FIXTURE_TEST_CASE(oneAngleLessThanTheOther_ltOpWorks, F)
+{
+  Angle alpha = Angle::deg(0);
+  Angle beta = Angle::deg(1);
+  BOOST_CHECK_LT(alpha, beta);
+  BOOST_CHECK(alpha < beta);
+  BOOST_CHECK(!(beta < alpha));
+}
 
 BOOST_AUTO_TEST_SUITE_END()
 
