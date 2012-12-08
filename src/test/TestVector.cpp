@@ -44,6 +44,36 @@ BOOST_FIXTURE_TEST_CASE(nullVector_hasNoLength, F)
   BOOST_CHECK_CLOSE(0.0, v.length(), 1e-6);
 }
 
+BOOST_FIXTURE_TEST_CASE(unitVectorAlongXAxis_hasUnitLength, F)
+{
+  Vector<double> v(1, 0);
+  BOOST_CHECK_CLOSE(1.0, v.length(), 1e-6);
+}
+
+BOOST_FIXTURE_TEST_CASE(unitVectorAlongYAxis_hasUnitLength, F)
+{
+  Vector<double> v(0, 1);
+  BOOST_CHECK_CLOSE(1.0, v.length(), 1e-6);
+}
+
+BOOST_FIXTURE_TEST_CASE(unitVectorAlongZAxis_hasUnitLength, F)
+{
+  Vector<double> v(0, 0, 1);
+  BOOST_CHECK_CLOSE(1.0, v.length(), 1e-6);
+}
+
+BOOST_FIXTURE_TEST_CASE(generic2DimVector_calculateLength, F)
+{
+  Vector<double> v(3.0, 4.0);
+  BOOST_CHECK_CLOSE(5.0, v.length(), 1e-6);
+}
+
+BOOST_FIXTURE_TEST_CASE(generic3DimVector_calculateLength, F)
+{
+  Vector<double> v(3, 4, 5);
+  BOOST_CHECK_CLOSE(std::sqrt(9 + 16 + 25), v.length(), 1e-6);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 /*
