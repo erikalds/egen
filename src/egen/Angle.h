@@ -40,6 +40,7 @@ namespace egen
     bool operator==(const Angle& other) const;
     bool operator<(const Angle& other) const;
     Angle operator-(const Angle& other) const;
+    Angle operator*(double scalar) const;
 
     friend std::ostream& operator<<(std::ostream& out, const Angle& a);
 
@@ -60,6 +61,9 @@ namespace egen
   { return !(alpha <= beta); }
   inline bool operator>=(const Angle& alpha, const Angle& beta)
   { return !(alpha < beta); }
+
+  inline Angle operator*(double scalar, const Angle& alpha)
+  { return alpha * scalar; }
 } // namespace egen
 
 #endif // ANGLE_H_

@@ -68,6 +68,11 @@ namespace egen
     return angle - other.angle;
   }
 
+  Angle Angle::operator*(double scalar) const
+  {
+    return angle * scalar;
+  }
+
   Angle::Angle(double rad) :
     angle(rad)
   {
