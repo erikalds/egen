@@ -36,6 +36,12 @@ struct F
 {
   F() {}
   ~F() {}
+
+  void check_similar(const Angle& alpha, double beta_deg)
+  {
+    BOOST_CHECK_LT(alpha, Angle::deg(beta_deg + 1e-6));
+    BOOST_CHECK_GT(alpha, Angle::deg(beta_deg - 1e-6));
+  }
 };
 
 BOOST_FIXTURE_TEST_CASE(twoZeroAngles_areEqual, F)
@@ -106,43 +112,35 @@ BOOST_FIXTURE_TEST_CASE(minusOperator, F)
 {
   Angle alpha = Angle::deg(45.0);
   Angle beta = Angle::deg(4.0);
-  BOOST_CHECK_LT(alpha - beta, Angle::deg(45.0 - 4.0 + 1e-6));
-  BOOST_CHECK_GT(alpha - beta, Angle::deg(45.0 - 4.0 - 1e-6));
+  check_similar(alpha - beta, 41);
 }
 
 BOOST_FIXTURE_TEST_CASE(multOperator, F)
 {
   Angle alpha = Angle::deg(45.0);
-  BOOST_CHECK_LT(alpha * 2.0, Angle::deg(45.0 * 2.0 + 1e-6));
-  BOOST_CHECK_GT(2.0 * alpha, Angle::deg(45.0 * 2.0 - 1e-6));
+  check_similar(alpha * 2, 90);
+  check_similar(2 * alpha, 90);
 }
 
 BOOST_FIXTURE_TEST_CASE(negateOperator, F)
 {
   Angle alpha = Angle::deg(45.0);
-  BOOST_CHECK_LT(-alpha, Angle::deg(-45.0 + 1e-6));
-  BOOST_CHECK_GT(-alpha, Angle::deg(-45.0 - 1e-6));
+  check_similar(-alpha, -45.0);
 }
 
 BOOST_FIXTURE_TEST_CASE(plusOperator, F)
 {
   Angle alpha = Angle::deg(45.0);
   Angle beta = Angle::deg(30.0);
-  BOOST_CHECK_LT(alpha + beta, Angle::deg(75.0 + 1e-6));
-  BOOST_CHECK_GT(alpha + beta, Angle::deg(75.0 - 1e-6));
-
-  BOOST_CHECK_LT(alpha + alpha, Angle::deg(90.0 + 1e-6));
-  BOOST_CHECK_GT(alpha + alpha, Angle::deg(90.0 - 1e-6));
+  check_similar(alpha + beta, 75.0);
+  check_similar(alpha + alpha, 90);
 }
 
 BOOST_FIXTURE_TEST_CASE(divideOperator, F)
 {
   Angle alpha = Angle::deg(90);
-  BOOST_CHECK_LT(alpha / 2, Angle::deg(45 + 1e-6));
-  BOOST_CHECK_GT(alpha / 2, Angle::deg(45 - 1e-6));
-
-  BOOST_CHECK_LT(alpha / 3, Angle::deg(30 + 1e-6));
-  BOOST_CHECK_GT(alpha / 3, Angle::deg(30 - 1e-6));
+  check_similar(alpha / 2, 45);
+  check_similar(alpha / 3, 30);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
