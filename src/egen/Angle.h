@@ -44,6 +44,7 @@ namespace egen
 
     Angle& operator+=(const Angle& other);
     Angle& operator-=(const Angle& other);
+    Angle& operator*=(double scalar);
 
     friend std::ostream& operator<<(std::ostream& out, const Angle& a);
 

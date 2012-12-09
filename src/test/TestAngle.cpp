@@ -161,6 +161,15 @@ BOOST_FIXTURE_TEST_CASE(subtractAndAssignOperator, F)
   check_similar(alpha, 10);
 }
 
+BOOST_FIXTURE_TEST_CASE(multiplyAndAssignOperator, F)
+{
+  Angle alpha = Angle::deg(22);
+  alpha *= 2;
+  check_similar(alpha, 44);
+  alpha *= 3;
+  check_similar(alpha, 132);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 /*

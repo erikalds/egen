@@ -85,6 +85,12 @@ namespace egen
     return *this;
   }
 
+  Angle& Angle::operator*=(double scalar)
+  {
+    angle *= scalar;
+    return *this;
+  }
+
   Angle::Angle(double rad) :
     angle(rad)
   {
