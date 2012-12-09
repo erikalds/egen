@@ -73,6 +73,12 @@ namespace egen
     return angle * scalar;
   }
 
+  Angle& Angle::operator+=(const Angle& other)
+  {
+    angle += other.angle;
+    return *this;
+  }
+
   Angle::Angle(double rad) :
     angle(rad)
   {
