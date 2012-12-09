@@ -63,16 +63,6 @@ namespace egen
     return angle < other.angle;
   }
 
-  Angle Angle::operator-(const Angle& other) const
-  {
-    return angle - other.angle;
-  }
-
-  Angle Angle::operator*(double scalar) const
-  {
-    return angle * scalar;
-  }
-
   Angle& Angle::operator+=(const Angle& other)
   {
     angle += other.angle;

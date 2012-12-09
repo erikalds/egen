@@ -39,8 +39,6 @@ namespace egen
 
     bool operator==(const Angle& other) const;
     bool operator<(const Angle& other) const;
-    Angle operator-(const Angle& other) const;
-    Angle operator*(double scalar) const;
 
     Angle& operator+=(const Angle& other);
     Angle& operator-=(const Angle& other);
@@ -67,14 +65,19 @@ namespace egen
   inline bool operator>=(const Angle& alpha, const Angle& beta)
   { return !(alpha < beta); }
 
+  inline Angle operator+(Angle alpha, const Angle& beta)
+  { alpha += beta; return alpha; }
+  inline Angle operator-(Angle alpha, const Angle& beta)
+  { alpha -= beta; return alpha; }
+  inline Angle operator*(Angle alpha, double scalar)
+  { alpha *= scalar; return alpha; }
   inline Angle operator*(double scalar, const Angle& alpha)
   { return alpha * scalar; }
-  inline Angle operator-(const Angle& alpha)
-  { return alpha * -1; }
-  inline Angle operator+(const Angle& alpha, const Angle& beta)
-  { return alpha - (-beta); }
   inline Angle operator/(const Angle& alpha, double scalar)
   { return alpha * (1.0 / scalar); }
+
+  inline Angle operator-(const Angle& alpha)
+  { return alpha * -1; }
 } // namespace egen
 
 #endif // ANGLE_H_
