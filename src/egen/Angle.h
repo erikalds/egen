@@ -45,6 +45,9 @@ namespace egen
     Angle& operator*=(double scalar);
     Angle& operator/=(double scalar);
 
+    /// For compatibility with std operations like sin, cos, tan, etc.
+    const double& rad() const { return angle; }
+
     friend std::ostream& operator<<(std::ostream& out, const Angle& a);
 
   private:

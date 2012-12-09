@@ -179,6 +179,14 @@ BOOST_FIXTURE_TEST_CASE(divideAndAssignOperator, F)
   check_similar(alpha, 7);
 }
 
+BOOST_FIXTURE_TEST_CASE(explicitDoubleConversion_forCompatibilityWithStdOps, F)
+{
+  Angle alpha = Angle::deg(45);
+  BOOST_CHECK_CLOSE(alpha.rad(), M_PI / 4, 1e-6);
+  BOOST_CHECK_CLOSE(std::sin(alpha.rad()), std::sqrt(2) / 2, 1e-6);
+  BOOST_CHECK_CLOSE(std::cos(alpha.rad()), std::sqrt(2) / 2, 1e-6);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 /*
