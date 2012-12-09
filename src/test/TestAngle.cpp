@@ -135,6 +135,16 @@ BOOST_FIXTURE_TEST_CASE(plusOperator, F)
   BOOST_CHECK_GT(alpha + alpha, Angle::deg(90.0 - 1e-6));
 }
 
+BOOST_FIXTURE_TEST_CASE(divideOperator, F)
+{
+  Angle alpha = Angle::deg(90);
+  BOOST_CHECK_LT(alpha / 2, Angle::deg(45 + 1e-6));
+  BOOST_CHECK_GT(alpha / 2, Angle::deg(45 - 1e-6));
+
+  BOOST_CHECK_LT(alpha / 3, Angle::deg(30 + 1e-6));
+  BOOST_CHECK_GT(alpha / 3, Angle::deg(30 - 1e-6));
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 /*
