@@ -67,9 +67,14 @@ def checkForGCCOption(conf,option):
     conf.Result(rc)
     return rc
 
+ldflags = []
+if ARGUMENTS.get('coverage', 0):
+    ldflags = ['--coverage', '-fprofile-arcs', '-ftest-coverage']
+
 env = Environment(CPPPATH=[".", ".."],
                   CPPDEFINES=["DEBUG"],
                   CPPFLAGS=[],
+                  LINKFLAGS=ldflags,
                   MAJOR_VERSION=0,
                   MINOR_VERSION=1,
                   REVISION_VERSION=0)
@@ -98,7 +103,11 @@ WantedCPPFLAGS=["--param inline-unit-growth=500",
                 "-pedantic",
                 "-ggdb",
                 "-O2",
-                '-std=c++0x']
+                '-std=c++0x',
+                ]
+if ARGUMENTS.get('coverage', 0):
+    WantedCPPFLAGS.extend(['-fprofile-arcs', '-ftest-coverage'])
+
 for flag in WantedCPPFLAGS:
     conf.CheckForGccOption(flag)
 
