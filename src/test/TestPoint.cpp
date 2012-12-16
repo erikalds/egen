@@ -43,10 +43,10 @@ BOOST_FIXTURE_TEST_CASE(test_invalid_point, F)
   BOOST_CHECK_EQUAL(egen::invalid<int>(), inv.z());
 }
 
-BOOST_FIXTURE_TEST_CASE(test_2d_point_invalid_z, F)
+BOOST_FIXTURE_TEST_CASE(test_2d_point_zero_z, F)
 {
   egen::Point<double> p(2.0, 0.0);
-  BOOST_CHECK(egen::invalid(p.z()));
+  BOOST_CHECK_EQUAL(0.0, p.z());
 }
 
 BOOST_FIXTURE_TEST_CASE(test_ostream_operator, F)

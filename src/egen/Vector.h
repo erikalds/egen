@@ -36,7 +36,7 @@ namespace egen
   {
   public:
     Vector() : Coordinate<T>() {}
-    Vector(const T& x, const T& y, const T& z=invalid<T>()) :
+    Vector(const T& x, const T& y, const T& z=0) :
       Coordinate<T>(x, y, z) {}
     Vector(const Coordinate<T>& other) : Coordinate<T>(other) {}
     operator Coordinate<T>() const { return *this; }

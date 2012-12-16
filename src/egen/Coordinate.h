@@ -74,7 +74,7 @@ namespace egen {
       return out << "invalid point";
 
     out << "(" << p.x() << ", " << p.y();
-    if (valid(p.z()))
+    if (p.z() != 0)
       out << ", " << p.z();
     return out << ")";
   }

@@ -37,7 +37,7 @@ namespace egen
   {
   public:
     Point() : Coordinate<T>() {}
-    Point(const T& x, const T& y, const T& z=invalid<T>()) : Coordinate<T>(x, y, z) {}
+    Point(const T& x, const T& y, const T& z=0) : Coordinate<T>(x, y, z) {}
     Point(const Coordinate<T>& other) : Coordinate<T>(other) {}
     operator Coordinate<T>() const { return *this; }
   };
