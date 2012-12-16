@@ -3,3 +3,6 @@
 /config.log
 *.os
 *.o
+*.gcov
+*.gcda
+*.gcno
