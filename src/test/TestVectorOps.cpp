@@ -27,6 +27,8 @@
 #include <boost/test/unit_test.hpp>
 
 #include "egen/Angle.h"
+#include "egen/InvalidPointOperation.h"
+#include "egen/Point.h"
 #include "egen/Vector.h"
 #include "egen/vector_ops.h"
 
@@ -72,6 +74,46 @@ BOOST_FIXTURE_TEST_CASE(genericAngle_correctUnitVector, F)
 {
   check_2d_unit_vector(unit_vector(Angle::deg(42)), 0.74314483, 0.66913061);
   check_2d_unit_vector(unit_vector(Angle::deg(232)), -0.61566148, -0.78801075);
+}
+
+BOOST_FIXTURE_TEST_CASE(twoThreeDPointDifference_givesThreeDVector, F)
+{
+  Point<int> p0(10, 20, 30);
+  Point<int> p1(4, 5, 6);
+  BOOST_CHECK_EQUAL(Vector<int>(6, 15, 24), p0 - p1);
+  BOOST_CHECK_EQUAL(Vector<int>(-6, -15, -24), p1 - p0);
+}
+
+BOOST_FIXTURE_TEST_CASE(twoTwoDPointsDifference_gives2DVector, F)
+{
+  Point<int> p0(1, 2);
+  Point<int> p1(4, 5);
+  BOOST_CHECK_EQUAL(Vector<int>(-3, -3), p0 - p1);
+  BOOST_CHECK_EQUAL(Vector<int>(3, 3), p1 - p0);
+}
+
+BOOST_FIXTURE_TEST_CASE(invalidPointDifference_throwsException, F)
+{
+  Point<int> p0(1, 2);
+  Point<int> invalid_pt = invalid<Point<int>>();
+  BOOST_CHECK_EXCEPTION(p0 - invalid_pt, InvalidPointOperation,
+                        [](const InvalidPointOperation& ipo)
+                        {
+                          return std::string(ipo.what()).find("ight hand side")
+                            != std::string::npos;
+                        });
+  BOOST_CHECK_EXCEPTION(invalid_pt - p0, InvalidPointOperation,
+                        [](const InvalidPointOperation& ipo)
+                        {
+                          return std::string(ipo.what()).find("eft hand side")
+                            != std::string::npos;
+                        });
+  BOOST_CHECK_EXCEPTION(invalid_pt - invalid_pt, InvalidPointOperation,
+                        [](const InvalidPointOperation& ipo)
+                        {
+                          return std::string(ipo.what()).find("oth sides")
+                            != std::string::npos;
+                        });
 }
 
 BOOST_AUTO_TEST_SUITE_END()

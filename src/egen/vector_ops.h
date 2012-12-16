@@ -27,12 +27,39 @@
     NORWAY
 */
 
+#include "egen/InvalidPointOperation.h"
+#include "egen/Point.h"
+#include "egen/Vector.h"
+
+// --- interface ---
 namespace egen
 {
-  template<typename T> class Vector;
   class Angle;
 
   Vector<double> unit_vector(const Angle& alpha);
+
+  template<typename T>
+  Vector<T> operator-(const Point<T>& lhs, const Point<T>& rhs);
 } // namespace egen
+
+
+// --- inline implementations ---
+
+template<typename T>
+egen::Vector<T> egen::operator-(const egen::Point<T>& lhs,
+                                const egen::Point<T>& rhs)
+{
+  const std::string repeated_string(" of difference of points operator.");
+  if (invalid(lhs) && invalid(rhs))
+    throw InvalidPointOperation("Both sides" + repeated_string);
+  if (invalid(lhs))
+    throw InvalidPointOperation("Left hand side" + repeated_string);
+  if (invalid(rhs))
+    throw InvalidPointOperation("Right hand side" + repeated_string);
+
+  return egen::Vector<T>(lhs.x() - rhs.x(),
+                         lhs.y() - rhs.y(),
+                         lhs.z() - rhs.z());
+}
 
 #endif // VECTOR_OPS_H_

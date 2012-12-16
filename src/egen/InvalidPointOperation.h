@@ -1,10 +1,10 @@
-#ifndef POINT_H_
-#define POINT_H_
+#ifndef INVALIDPOINTOPERATION_H_
+#define INVALIDPOINTOPERATION_H_
 
-/* Header created: 2009-06-27
+/* Header created: 2012-12-16
 
   egen - Erik's generic library
-  Copyright (C) 2009 Erik Åldstedt Sund
+  Copyright (C) 2012 Erik Åldstedt Sund
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -27,20 +27,17 @@
     NORWAY
 */
 
-#include "egen/Coordinate.h"
-#include "egen/Vector.h"
+#include <stdexcept>
 
 namespace egen
 {
-  template<typename T>
-  class Point : public Coordinate<T>
+  class InvalidPointOperation : public std::invalid_argument
   {
   public:
-    Point() : Coordinate<T>() {}
-    Point(const T& x, const T& y, const T& z=0) : Coordinate<T>(x, y, z) {}
-    Point(const Coordinate<T>& other) : Coordinate<T>(other) {}
-    operator Coordinate<T>() const { return *this; }
+    InvalidPointOperation(const std::string& msg) :
+      std::invalid_argument("An invalid point was given to a function. " + msg)
+    {}
   };
 } // namespace egen
 
-#endif // POINT_H_
+#endif // INVALIDPOINTOPERATION_H_
