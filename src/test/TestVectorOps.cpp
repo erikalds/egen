@@ -28,6 +28,7 @@
 
 #include "egen/Angle.h"
 #include "egen/InvalidPointOperation.h"
+#include "egen/InvalidVectorOperation.h"
 #include "egen/Point.h"
 #include "egen/Vector.h"
 #include "egen/vector_ops.h"
@@ -113,6 +114,74 @@ BOOST_FIXTURE_TEST_CASE(invalidPointDifference_throwsException, F)
                         {
                           return std::string(ipo.what()).find("oth sides")
                             != std::string::npos;
+                        });
+}
+
+BOOST_FIXTURE_TEST_CASE(twoDPointPlusTwoDVector_isTwoDPoint, F)
+{
+  Point<int> p0(10, 10);
+  Point<int> p1(20, 20);
+  Vector<int> v0(20, 42);
+  Vector<int> v1(0, 22);
+  BOOST_CHECK_EQUAL(Point<int>(30, 52), p0 + v0);
+  BOOST_CHECK_EQUAL(Point<int>(20, 42), p1 + v1);
+}
+
+BOOST_FIXTURE_TEST_CASE(threeDPointPlusThreeDVector_isThreeDPoint, F)
+{
+  Point<int> p0(10, 10, 10);
+  Point<int> p1(20, 20, 20);
+  Vector<int> v0(0, 10, 20);
+  Vector<int> v1(4, 5, 6);
+  BOOST_CHECK_EQUAL(Point<int>(10, 20, 30), p0 + v0);
+  BOOST_CHECK_EQUAL(Point<int>(24, 25, 26), p1 + v1);
+}
+
+BOOST_FIXTURE_TEST_CASE(pointPlusVector_handlesInvalid, F)
+{
+  Point<int> p = invalid<Point<int>>();
+  Vector<int> v = invalid<Vector<int>>();
+  BOOST_CHECK_EXCEPTION(p + Vector<int>(0, 0), InvalidPointOperation,
+                        [](const InvalidPointOperation& ipo)
+                        {
+                          const std::string what(ipo.what());
+                          const std::size_t addpos(what.find(" add "));
+                          const std::size_t vecpos(what.find(" vector "));
+                          const std::size_t invpos(what.rfind("invalid point"));
+                          return addpos != std::string::npos
+                            && vecpos != std::string::npos
+                            && invpos != std::string::npos
+                            && addpos < vecpos
+                            && vecpos < invpos;
+                        });
+  BOOST_CHECK_EXCEPTION(Point<int>(0, 0) + v, InvalidVectorOperation,
+                        [](const InvalidVectorOperation& ivo)
+                        {
+                          const std::string what(ivo.what());
+                          const std::size_t addpos(what.find(" add "));
+                          const std::size_t invpos
+                            = what.rfind(" invalid vector ");
+                          const std::size_t pntpos(what.find(" point"));
+                          return addpos != std::string::npos
+                            && invpos != std::string::npos
+                            && pntpos != std::string::npos
+                            && addpos < invpos
+                            && invpos < pntpos;
+                        });
+  BOOST_CHECK_EXCEPTION(p + v, InvalidVectorOperation,
+                        [](const InvalidVectorOperation& ivo)
+                        {
+                          const std::string what(ivo.what());
+                          const std::size_t addpos(what.find(" add "));
+                          const std::size_t ivcpos
+                            = what.rfind(" invalid vector ");
+                          const std::size_t iptpos
+                            = what.rfind(" invalid point");
+                          return addpos != std::string::npos
+                            && ivcpos != std::string::npos
+                            && iptpos != std::string::npos
+                            && addpos < ivcpos
+                            && ivcpos < iptpos;
                         });
 }
 

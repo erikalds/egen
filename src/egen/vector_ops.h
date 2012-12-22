@@ -28,6 +28,7 @@
 */
 
 #include "egen/InvalidPointOperation.h"
+#include "egen/InvalidVectorOperation.h"
 #include "egen/Point.h"
 #include "egen/Vector.h"
 
@@ -40,6 +41,9 @@ namespace egen
 
   template<typename T>
   Vector<T> operator-(const Point<T>& lhs, const Point<T>& rhs);
+
+  template<typename T>
+  Point<T> operator+(const Point<T>& lhs, const Vector<T>& rhs);
 } // namespace egen
 
 
@@ -60,6 +64,21 @@ egen::Vector<T> egen::operator-(const egen::Point<T>& lhs,
   return egen::Vector<T>(lhs.x() - rhs.x(),
                          lhs.y() - rhs.y(),
                          lhs.z() - rhs.z());
+}
+
+template<typename T>
+egen::Point<T> egen::operator+(const egen::Point<T>& lhs,
+                               const egen::Vector<T>& rhs)
+{
+  if (invalid(lhs) && invalid(rhs))
+    throw InvalidVectorOperation("Tried to add an invalid vector to an "
+                                 "invalid point.");
+  if (invalid(lhs))
+    throw InvalidPointOperation("Tried to add a vector to an invalid point.");
+  if (invalid(rhs))
+    throw InvalidVectorOperation("Tried to add an invalid vector to a point.");
+  return egen::Point<T>(lhs.x() + rhs.x(), lhs.y() + rhs.y(),
+                        lhs.z() + rhs.z());
 }
 
 #endif // VECTOR_OPS_H_
