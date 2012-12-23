@@ -185,6 +185,19 @@ BOOST_FIXTURE_TEST_CASE(pointPlusVector_handlesInvalid, F)
                         });
 }
 
+BOOST_FIXTURE_TEST_CASE(negateVector, F)
+{
+  Vector<int> v0(10, 10);
+  Vector<int> v1(-100, -200, -42);
+  BOOST_CHECK_EQUAL(Vector<int>(-10, -10), -v0);
+  BOOST_CHECK_EQUAL(Vector<int>(100, 200, 42), -v1);
+
+  BOOST_CHECK_EXCEPTION(-invalid<Vector<int>>(), InvalidVectorOperation,
+                        [](const InvalidVectorOperation& ivo)
+                        { return std::string(ivo.what()).find("Cannot negate invalid vector.")
+                            != std::string::npos; });
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 /*

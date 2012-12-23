@@ -40,6 +40,9 @@ namespace egen
   Vector<double> unit_vector(const Angle& alpha);
 
   template<typename T>
+  Vector<T> operator-(const Vector<T>& v);
+
+  template<typename T>
   Vector<T> operator-(const Point<T>& lhs, const Point<T>& rhs);
 
   template<typename T>
@@ -48,6 +51,14 @@ namespace egen
 
 
 // --- inline implementations ---
+
+template<typename T>
+egen::Vector<T> egen::operator-(const egen::Vector<T>& v)
+{
+  if (egen::invalid(v))
+    throw egen::InvalidVectorOperation("Cannot negate invalid vector.");
+  return egen::Vector<T>(-v.x(), -v.y(), -v.z());
+}
 
 template<typename T>
 egen::Vector<T> egen::operator-(const egen::Point<T>& lhs,
