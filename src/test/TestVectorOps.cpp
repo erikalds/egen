@@ -198,6 +198,57 @@ BOOST_FIXTURE_TEST_CASE(negateVector, F)
                             != std::string::npos; });
 }
 
+BOOST_FIXTURE_TEST_CASE(pointMinusVector, F)
+{
+  BOOST_CHECK_EQUAL(Point<int>(32, 42), Point<int>(52, 52) - Vector<int>(20, 10));
+  BOOST_CHECK_EQUAL(Point<int>(1, 2, 3), Point<int>(4, 3, 2) - Vector<int>(3, 1, -1));
+  BOOST_CHECK_EXCEPTION(invalid<Point<int>>() - Vector<int>(0, 0, 0),
+                        InvalidPointOperation,
+                        [](const InvalidPointOperation& ipo)
+                        {
+                          const std::string what(ipo.what());
+                          const std::size_t subpos(what.find(" subtract "));
+                          const std::size_t vecpos(what.find(" vector "));
+                          const std::size_t invpos(what.rfind("invalid point"));
+                          return subpos != std::string::npos
+                            && vecpos != std::string::npos
+                            && invpos != std::string::npos
+                            && subpos < vecpos
+                            && vecpos < invpos;
+                        });
+  BOOST_CHECK_EXCEPTION(Point<int>(0, 0) - invalid<Vector<int>>(),
+                        InvalidVectorOperation,
+                        [](const InvalidVectorOperation& ivo)
+                        {
+                          const std::string what(ivo.what());
+                          const std::size_t subpos(what.find(" subtract "));
+                          const std::size_t invpos
+                            = what.rfind(" invalid vector ");
+                          const std::size_t pntpos(what.find(" point"));
+                          return subpos != std::string::npos
+                            && invpos != std::string::npos
+                            && pntpos != std::string::npos
+                            && subpos < invpos
+                            && invpos < pntpos;
+                        });
+  BOOST_CHECK_EXCEPTION(invalid<Point<int> >() - invalid<Vector<int> >(),
+                        InvalidVectorOperation,
+                        [](const InvalidVectorOperation& ivo)
+                        {
+                          const std::string what(ivo.what());
+                          const std::size_t subpos(what.find(" subtract "));
+                          const std::size_t ivcpos
+                            = what.rfind(" invalid vector ");
+                          const std::size_t iptpos
+                            = what.rfind(" invalid point");
+                          return subpos != std::string::npos
+                            && ivcpos != std::string::npos
+                            && iptpos != std::string::npos
+                            && subpos < ivcpos
+                            && ivcpos < iptpos;
+                        });
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 /*

@@ -47,6 +47,9 @@ namespace egen
 
   template<typename T>
   Point<T> operator+(const Point<T>& lhs, const Vector<T>& rhs);
+
+  template<typename T>
+  Point<T> operator-(const Point<T>& lhs, const Vector<T>& rhs);
 } // namespace egen
 
 
@@ -65,12 +68,12 @@ egen::Vector<T> egen::operator-(const egen::Point<T>& lhs,
                                 const egen::Point<T>& rhs)
 {
   const std::string repeated_string(" of difference of points operator.");
-  if (invalid(lhs) && invalid(rhs))
-    throw InvalidPointOperation("Both sides" + repeated_string);
-  if (invalid(lhs))
-    throw InvalidPointOperation("Left hand side" + repeated_string);
-  if (invalid(rhs))
-    throw InvalidPointOperation("Right hand side" + repeated_string);
+  if (egen::invalid(lhs) && egen::invalid(rhs))
+    throw egen::InvalidPointOperation("Both sides" + repeated_string);
+  if (egen::invalid(lhs))
+    throw egen::InvalidPointOperation("Left hand side" + repeated_string);
+  if (egen::invalid(rhs))
+    throw egen::InvalidPointOperation("Right hand side" + repeated_string);
 
   return egen::Vector<T>(lhs.x() - rhs.x(),
                          lhs.y() - rhs.y(),
@@ -81,15 +84,34 @@ template<typename T>
 egen::Point<T> egen::operator+(const egen::Point<T>& lhs,
                                const egen::Vector<T>& rhs)
 {
-  if (invalid(lhs) && invalid(rhs))
-    throw InvalidVectorOperation("Tried to add an invalid vector to an "
+  if (egen::invalid(lhs) && egen::invalid(rhs))
+    throw egen::InvalidVectorOperation("Tried to add an invalid vector to an "
                                  "invalid point.");
-  if (invalid(lhs))
-    throw InvalidPointOperation("Tried to add a vector to an invalid point.");
-  if (invalid(rhs))
-    throw InvalidVectorOperation("Tried to add an invalid vector to a point.");
+  if (egen::invalid(lhs))
+    throw egen::InvalidPointOperation("Tried to add a vector to an invalid point.");
+  if (egen::invalid(rhs))
+    throw egen::InvalidVectorOperation("Tried to add an invalid vector to a point.");
   return egen::Point<T>(lhs.x() + rhs.x(), lhs.y() + rhs.y(),
                         lhs.z() + rhs.z());
+}
+
+template<typename T>
+egen::Point<T>
+egen::operator-(const egen::Point<T>& lhs, const egen::Vector<T>& rhs)
+{
+  if (egen::invalid(lhs) && egen::invalid(rhs))
+    throw egen::InvalidVectorOperation("Tried to subtract an invalid vector "
+                                       "from an invalid point.");
+  if (egen::invalid(lhs))
+    throw egen::InvalidPointOperation("Tried to subtract a vector from an "
+                                      "invalid point.");
+  if (egen::invalid(rhs))
+    throw egen::InvalidVectorOperation("Tried to subtract an invalid vector "
+                                       "from a point.");
+
+  return egen::Point<T>(lhs.x() - rhs.x(),
+                        lhs.y() - rhs.y(),
+                        lhs.z() - rhs.z());
 }
 
 #endif // VECTOR_OPS_H_
