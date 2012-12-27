@@ -3,7 +3,7 @@ libegen (0.4.2) quantal; urgency=low
   * Added vector operations.
   * Added some implementation of the Angle class.
 
- -- Erik Åldstedt Sund <erikalds@traal>  Thu, 27 Dec 2012 11:20:45 +0100
+ -- Erik Åldstedt Sund <erikalds@gmail.com>  Thu, 27 Dec 2012 11:20:45 +0100
 
 libegen (0.4.1) oneiric; urgency=low
 
