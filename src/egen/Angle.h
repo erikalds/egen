@@ -27,14 +27,60 @@
     NORWAY
 */
 
+#include <iosfwd>
+
 namespace egen
 {
   class Angle
   {
   public:
-    static Angle degrees(double angle);
-    static Angle radians(double angle);
+    static Angle deg(double angle);
+    static Angle rad(double angle);
+
+    bool operator==(const Angle& other) const;
+    bool operator<(const Angle& other) const;
+
+    Angle& operator+=(const Angle& other);
+    Angle& operator-=(const Angle& other);
+    Angle& operator*=(double scalar);
+    Angle& operator/=(double scalar);
+
+    /// For compatibility with std operations like sin, cos, tan, etc.
+    const double& rad() const { return angle; }
+
+    friend std::ostream& operator<<(std::ostream& out, const Angle& a);
+
+  private:
+    Angle(double rad);
+
+    double angle;
   };
+
+  std::ostream& operator<<(std::ostream& out, const Angle& a);
+
+  inline bool operator!=(const Angle& alpha, const Angle& beta)
+  { return !(alpha == beta); }
+
+  inline bool operator<=(const Angle& alpha, const Angle& beta)
+  { return alpha < beta || alpha == beta; }
+  inline bool operator>(const Angle& alpha, const Angle& beta)
+  { return !(alpha <= beta); }
+  inline bool operator>=(const Angle& alpha, const Angle& beta)
+  { return !(alpha < beta); }
+
+  inline Angle operator+(Angle alpha, const Angle& beta)
+  { alpha += beta; return alpha; }
+  inline Angle operator-(Angle alpha, const Angle& beta)
+  { alpha -= beta; return alpha; }
+  inline Angle operator*(Angle alpha, double scalar)
+  { alpha *= scalar; return alpha; }
+  inline Angle operator*(double scalar, const Angle& alpha)
+  { return alpha * scalar; }
+  inline Angle operator/(const Angle& alpha, double scalar)
+  { return alpha * (1.0 / scalar); }
+
+  inline Angle operator-(const Angle& alpha)
+  { return alpha * -1; }
 } // namespace egen
 
 #endif // ANGLE_H_

@@ -1,7 +1,7 @@
-/* Source file created: 2009-07-09
+/* Source file created: 2012-12-08
 
-  egen - Erik's generic library
-  Copyright (C) 2009 Erik Åldstedt Sund
+  gitlogviz - Git log visualization.
+  Copyright (C) 2012 Erik Åldstedt Sund
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -25,9 +25,12 @@
 */
 
 #include <boost/test/unit_test.hpp>
-#include "egen/Point.h"
 
-BOOST_AUTO_TEST_SUITE(TestPoint)
+#include "egen/Vector.h"
+
+using namespace egen;
+
+BOOST_AUTO_TEST_SUITE(testVector)
 
 struct F
 {
@@ -35,39 +38,40 @@ struct F
   ~F() {}
 };
 
-BOOST_FIXTURE_TEST_CASE(test_invalid_point, F)
+BOOST_FIXTURE_TEST_CASE(nullVector_hasNoLength, F)
 {
-  egen::Point<int> inv = egen::invalid<egen::Point<int> >();
-  BOOST_CHECK_EQUAL(egen::invalid<int>(), inv.x());
-  BOOST_CHECK_EQUAL(egen::invalid<int>(), inv.y());
-  BOOST_CHECK_EQUAL(egen::invalid<int>(), inv.z());
+  Vector<double> v(0, 0);
+  BOOST_CHECK_CLOSE(0.0, v.length(), 1e-6);
 }
 
-BOOST_FIXTURE_TEST_CASE(test_2d_point_zero_z, F)
+BOOST_FIXTURE_TEST_CASE(unitVectorAlongXAxis_hasUnitLength, F)
 {
-  egen::Point<double> p(2.0, 0.0);
-  BOOST_CHECK_EQUAL(0.0, p.z());
+  Vector<double> v(1, 0);
+  BOOST_CHECK_CLOSE(1.0, v.length(), 1e-6);
 }
 
-BOOST_FIXTURE_TEST_CASE(test_ostream_operator, F)
+BOOST_FIXTURE_TEST_CASE(unitVectorAlongYAxis_hasUnitLength, F)
 {
-  egen::Point<double> p2d(2.2, 1.0);
-  egen::Point<double> p3d(3.0, 2.0, 1.0);
-  std::ostringstream actual2d;
-  actual2d << p2d;
-  BOOST_CHECK_EQUAL("(2.2, 1)", actual2d.str());
-  std::ostringstream actual3d;
-  actual3d << p3d;
-  BOOST_CHECK_EQUAL("(3, 2, 1)", actual3d.str());
+  Vector<double> v(0, 1);
+  BOOST_CHECK_CLOSE(1.0, v.length(), 1e-6);
 }
 
-BOOST_FIXTURE_TEST_CASE(test_equality_operator, F)
+BOOST_FIXTURE_TEST_CASE(unitVectorAlongZAxis_hasUnitLength, F)
 {
-  egen::Point<int> p0(2, 0);
-  egen::Point<int> p1(p0.x(), p0.y());
-  egen::Point<int> p2(p1.x(), p1.y() + 1);
-  BOOST_CHECK_EQUAL(p0, p1);
-  BOOST_CHECK(!(p1 == p2));
+  Vector<double> v(0, 0, 1);
+  BOOST_CHECK_CLOSE(1.0, v.length(), 1e-6);
+}
+
+BOOST_FIXTURE_TEST_CASE(generic2DimVector_calculateLength, F)
+{
+  Vector<double> v(3.0, 4.0);
+  BOOST_CHECK_CLOSE(5.0, v.length(), 1e-6);
+}
+
+BOOST_FIXTURE_TEST_CASE(generic3DimVector_calculateLength, F)
+{
+  Vector<double> v(3, 4, 5);
+  BOOST_CHECK_CLOSE(std::sqrt(9 + 16 + 25), v.length(), 1e-6);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -27,7 +27,6 @@
     NORWAY
 */
 
-#include "egen/Angle.h"
 #include "egen/Coordinate.h"
 
 namespace egen
@@ -37,12 +36,23 @@ namespace egen
   {
   public:
     Vector() : Coordinate<T>() {}
-    Vector(const T& x, const T& y, const T& z=invalid<T>()) : Coordinate<T>(x, y, z) {}
-//     Vector(double length, const Angle& thetaZ, const Angle& thetaXY=Angle::degrees(0.0)) :
-//       Coordinate<T>() {}
+    Vector(const T& x, const T& y, const T& z=0) :
+      Coordinate<T>(x, y, z) {}
     Vector(const Coordinate<T>& other) : Coordinate<T>(other) {}
     operator Coordinate<T>() const { return *this; }
+
+    double length() const;
   };
 } // namespace egen
+
+
+template<typename T>
+double egen::Vector<T>::length() const
+{
+  double l = this->x() * this->x() + this->y() * this->y();
+  if (valid(this->z()))
+    l += this->z() * this->z();
+  return std::sqrt(l);
+}
 
 #endif // VECTOR_H_

@@ -1,10 +1,7 @@
-#ifndef POINT_H_
-#define POINT_H_
-
-/* Header created: 2009-06-27
+/* Source file created: 2012-12-08
 
   egen - Erik's generic library
-  Copyright (C) 2009 Erik Åldstedt Sund
+  Copyright (C) 2012 Erik Åldstedt Sund
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -27,20 +24,15 @@
     NORWAY
 */
 
-#include "egen/Coordinate.h"
+#include "egen/vector_ops.h"
+
+#include "egen/Angle.h"
 #include "egen/Vector.h"
 
 namespace egen
 {
-  template<typename T>
-  class Point : public Coordinate<T>
+  Vector<double> unit_vector(const Angle& alpha)
   {
-  public:
-    Point() : Coordinate<T>() {}
-    Point(const T& x, const T& y, const T& z=0) : Coordinate<T>(x, y, z) {}
-    Point(const Coordinate<T>& other) : Coordinate<T>(other) {}
-    operator Coordinate<T>() const { return *this; }
-  };
+    return Vector<double>(std::cos(alpha.rad()), std::sin(alpha.rad()), 0);
+  }
 } // namespace egen
-
-#endif // POINT_H_

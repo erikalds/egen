@@ -25,7 +25,76 @@
 */
 
 #include "egen/Angle.h"
+#include <cmath>
+#include <ostream>
 
 namespace egen
 {
+  namespace
+  {
+    inline double rad2deg(double rad)
+    {
+      return rad * 180 / M_PI;
+    }
+
+    inline double deg2rad(double deg)
+    {
+      return deg * M_PI / 180;
+    }
+  }
+
+  Angle Angle::deg(double angle)
+  {
+    return Angle(deg2rad(angle));
+  }
+
+  Angle Angle::rad(double angle)
+  {
+    return Angle(angle);
+  }
+
+  bool Angle::operator==(const Angle& other) const
+  {
+    return angle == other.angle;
+  }
+
+  bool Angle::operator<(const Angle& other) const
+  {
+    return angle < other.angle;
+  }
+
+  Angle& Angle::operator+=(const Angle& other)
+  {
+    angle += other.angle;
+    return *this;
+  }
+
+  Angle& Angle::operator-=(const Angle& other)
+  {
+    angle -= other.angle;
+    return *this;
+  }
+
+  Angle& Angle::operator*=(double scalar)
+  {
+    angle *= scalar;
+    return *this;
+  }
+
+  Angle& Angle::operator/=(double scalar)
+  {
+    angle /= scalar;
+    return *this;
+  }
+
+  Angle::Angle(double rad) :
+    angle(rad)
+  {
+  }
+
+  std::ostream& operator<<(std::ostream& out, const Angle& a)
+  {
+    return out << rad2deg(a.angle) << " deg";
+  }
+
 } // namespace egen
