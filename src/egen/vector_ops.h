@@ -50,6 +50,11 @@ namespace egen
 
   template<typename T>
   Point<T> operator-(const Point<T>& lhs, const Vector<T>& rhs);
+
+  template<typename T>
+  Vector<T> operator*(const Vector<T>& lhs, const T& rhs);
+  template<typename T>
+  Vector<T> operator*(const T& lhs, const Vector<T>& rhs) { return rhs * lhs; }
 } // namespace egen
 
 
@@ -112,6 +117,22 @@ egen::operator-(const egen::Point<T>& lhs, const egen::Vector<T>& rhs)
   return egen::Point<T>(lhs.x() - rhs.x(),
                         lhs.y() - rhs.y(),
                         lhs.z() - rhs.z());
+}
+
+template<typename T>
+egen::Vector<T> egen::operator*(const egen::Vector<T>& lhs, const T& rhs)
+{
+  if (egen::invalid(lhs) && egen::invalid(rhs))
+    throw egen::InvalidVectorOperation("Tried to multiply an invalid vector "
+                                       "with an invalid scalar.");
+  if (egen::invalid(lhs))
+    throw egen::InvalidVectorOperation("Tried to multiply an invalid vector "
+                                       "with a scalar.");
+  if (egen::invalid(rhs))
+    throw egen::InvalidVectorOperation("Tried to multiply a vector with an "
+                                       "invalid scalar.");
+
+  return egen::Vector<T>(lhs.x() * rhs, lhs.y() * rhs, lhs.z() * rhs);
 }
 
 #endif // VECTOR_OPS_H_

@@ -249,6 +249,58 @@ BOOST_FIXTURE_TEST_CASE(pointMinusVector, F)
                         });
 }
 
+BOOST_FIXTURE_TEST_CASE(multiplyVectorByScalar, F)
+{
+  BOOST_CHECK_EQUAL(Vector<int>(2, 2), Vector<int>(1, 1) * 2);
+  BOOST_CHECK_EQUAL(Vector<int>(18, 3, 9), Vector<int>(6, 1, 3) * 3);
+  BOOST_CHECK_EQUAL(Vector<int>(2, 2), 2 * Vector<int>(1, 1));
+  BOOST_CHECK_EQUAL(Vector<int>(18, 3, 9), 3 * Vector<int>(6, 1, 3));
+  BOOST_CHECK_EXCEPTION(invalid<Vector<int>>() * 2,
+                        InvalidVectorOperation,
+                        [](const InvalidVectorOperation& ivo)
+                        {
+                          const std::string what(ivo.what());
+                          const std::size_t mulpos(what.find(" multiply "));
+                          const std::size_t vecpos(what.rfind(" invalid vector "));
+                          const std::size_t scalarpos(what.rfind(" scalar"));
+                          return mulpos != std::string::npos
+                            && vecpos != std::string::npos
+                            && scalarpos != std::string::npos
+                            && mulpos < vecpos
+                            && vecpos < scalarpos;
+                        });
+  BOOST_CHECK_EXCEPTION(Vector<int>(0, 0) * invalid<int>(),
+                        InvalidVectorOperation,
+                        [](const InvalidVectorOperation& ivo)
+                        {
+                          const std::string what(ivo.what());
+                          const std::size_t mulpos(what.find(" multiply "));
+                          const std::size_t vecpos = what.rfind(" vector ");
+                          const std::size_t scalarpos(what.find(" invalid scalar"));
+                          return mulpos != std::string::npos
+                            && vecpos != std::string::npos
+                            && scalarpos != std::string::npos
+                            && mulpos < vecpos
+                            && vecpos < scalarpos;
+                        });
+  BOOST_CHECK_EXCEPTION(invalid<Vector<int> >() * invalid<int>(),
+                        InvalidVectorOperation,
+                        [](const InvalidVectorOperation& ivo)
+                        {
+                          const std::string what(ivo.what());
+                          const std::size_t mulpos(what.find(" multiply "));
+                          const std::size_t ivcpos
+                            = what.rfind(" invalid vector ");
+                          const std::size_t iscpos
+                            = what.rfind(" invalid scalar");
+                          return mulpos != std::string::npos
+                            && ivcpos != std::string::npos
+                            && iscpos != std::string::npos
+                            && mulpos < ivcpos
+                            && ivcpos < iscpos;
+                        });
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 /*
