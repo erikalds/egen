@@ -1,3 +1,9 @@
+libegen (0.4.3) raring; urgency=low
+
+  * Added egen::make_unique template.
+
+ -- Erik Åldstedt Sund <erikalds@gmail.com>  Sun, 12 May 2013 11:38:44 +0200
+
 libegen (0.4.2) quantal; urgency=low
 
   * Added vector operations.
