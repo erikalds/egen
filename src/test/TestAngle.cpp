@@ -24,6 +24,7 @@
     NORWAY
 */
 
+#define BOOST_TEST_MODULE libegen_test
 #include <boost/test/unit_test.hpp>
 
 #include "egen/Angle.h"

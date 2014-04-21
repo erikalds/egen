@@ -23,6 +23,7 @@ cpp_files = env.Glob("*.cpp")
 internal_libs = [libegen_shared]
 deps = cpp_files + internal_libs
 
+e.Append(CPPDEFINES="BOOST_TEST_DYN_LINK")
 testprog = e.Program('libegen-test', deps)
 e.AddPostAction(testprog, 'LD_LIBRARY_PATH=egen test/libegen-test')
 
